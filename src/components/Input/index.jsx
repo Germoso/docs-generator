@@ -7,7 +7,9 @@ const Input = ({ placeholder = "", state, setState }) => {
             placeholder={placeholder}
             value={state}
             className="py-2 px-1"
-            onChange={(e) => setState(e.target.vale)}
+            onChange={(e) => {
+                setState(e.target.vale)
+            }}
         />
     )
 }

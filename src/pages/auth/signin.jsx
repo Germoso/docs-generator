@@ -2,7 +2,7 @@ import Link from "next/link"
 import { useAuth } from "@/hooks/useAuth"
 import React, { useEffect } from "react"
 import { useRouter } from "next/router"
-import { googleAuth, logIn } from "../../firebase/auth"
+import { googleAuth } from "../../firebase/auth"
 import Button from "@/components/Button"
 import GoogleLogo from "../../components/Logos/GoogleLogo"
 import TypedEffect from "@/components/TypedEffect"
@@ -13,7 +13,7 @@ const Login = () => {
 
     useEffect(() => {
         if (user.status === 1) {
-            router.push("/home")
+            router.replace("/home")
         }
     }, [user])
 
@@ -24,8 +24,6 @@ const Login = () => {
             </h1>
             <div>
                 <form className="flex flex-col gap-2">
-                    {/* <input type="text" />
-                <input type="text" /> */}
                     <Button
                         type="secondary"
                         onClick={(e) => {

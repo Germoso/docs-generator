@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app"
-import { doc, getFirestore, getDoc, setDoc } from "firebase/firestore"
+import { doc, getFirestore, getDoc, setDoc, updateDoc } from "firebase/firestore"
 
 import "firebase/firestore"
 
@@ -26,8 +26,7 @@ export const createUserIfDontExist = async (id, data) => {
     const docSnap = await getDoc(docRef)
 
     if (docSnap.exists()) {
-        console.log("Document data:", docSnap.data())
-        console.log("usuario ya existe")
+        return false
     } else {
         console.log("usuario creado")
         return await createUser(data)
@@ -40,6 +39,18 @@ export const createUser = async (data) => {
         return true
     } catch (e) {
         console.error("Error adding document: ", e)
+        return false
+    }
+}
+
+export const updateUserDisplayName = async (id, displayName) => {
+    try {
+        await updateDoc(doc(db, "users", id), {
+            displayName,
+        })
+        return true
+    } catch (e) {
+        console.error("Error updating document: ", e)
         return false
     }
 }
