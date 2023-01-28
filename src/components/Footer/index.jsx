@@ -11,7 +11,7 @@ const Index = () => {
     const router = useRouter()
 
     const icons = {
-        initial: { x: 400 },
+        initial: { x: 0 },
         animate: { x: 0, transition: { duration: 0.8 } },
     }
 
