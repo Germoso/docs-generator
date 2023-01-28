@@ -1,3 +1,5 @@
 export default async function (res, req) {
-    res.send("hola")
+    res.status(200).json({
+        hola: "hola",
+    })
 }
