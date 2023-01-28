@@ -1,6 +1,5 @@
 import { useEffect } from "react"
 import { useRouter } from "next/router"
-import { useAuth } from "@/hooks/useAuth"
 import TypedEffect from "@/components/TypedEffect"
 import Button from "@/components/Button"
 import GoogleLogo from "../../../components/Logos/GoogleLogo"
@@ -18,9 +17,10 @@ const Signup = () => {
             case 1:
                 createUserIfDontExist(user.uid, user)
                     .then((created) => {
-                        console.log(created)
                         if (created) {
-                            router.push("signup/onboarding")
+                            router.replace("/auth/signup/onboarding")
+                        } else {
+                            router.replace("/auth/signin")
                         }
                     })
                     .catch((err) => console.log(err))
@@ -42,7 +42,8 @@ const Signup = () => {
                         type="secondary"
                         onClick={(e) => {
                             e.preventDefault()
-                            googleAuth()
+
+                            googleAuth().catch((err) => console.log(err))
                         }}
                         className={"rounded-none flex items-center"}
                     >
@@ -52,7 +53,7 @@ const Signup = () => {
                 </form>
                 <span className="text-sm block text-center">
                     Already have an account?{" "}
-                    <Link href={"/auth/signup"} className="text-black">
+                    <Link href={"/auth/signin"} className="text-black">
                         Sign in
                     </Link>
                 </span>

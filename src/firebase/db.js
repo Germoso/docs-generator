@@ -22,13 +22,9 @@ const app = initializeApp(firebaseConfig)
 const db = getFirestore(app)
 
 export const createUserIfDontExist = async (id, data) => {
-    const docRef = doc(db, "users", id)
-    const docSnap = await getDoc(docRef)
-
-    if (docSnap.exists()) {
+    if (await userExist(id)) {
         return false
     } else {
-        console.log("usuario creado")
         return await createUser(data)
     }
 }
@@ -52,5 +48,15 @@ export const updateUserDisplayName = async (id, displayName) => {
     } catch (e) {
         console.error("Error updating document: ", e)
         return false
+    }
+}
+
+export const userExist = async (id) => {
+    try {
+        const docRef = doc(db, "users", id)
+        const docSnap = await getDoc(docRef)
+        return docSnap.exists()
+    } catch (error) {
+        return error
     }
 }

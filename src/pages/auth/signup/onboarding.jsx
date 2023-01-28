@@ -39,7 +39,7 @@ const Onboarding = () => {
                 onSubmit={(e) => {
                     e.preventDefault()
                     updateUserDisplayName(user.uid, inputValue)
-                    router.push("/home")
+                    router.replace("/home")
                 }}
             >
                 <input

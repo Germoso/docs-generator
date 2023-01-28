@@ -1,23 +1,39 @@
 import Image from "next/image"
-import React from "react"
+import React, { useState } from "react"
 import coin from "public/coin.png"
+import UserModal from "./UserModal"
+import { AnimatePresence } from "framer-motion"
 
 const Index = ({ credentials }) => {
     const user = credentials.user
 
+    const [isUserModalOpen, setIsUserModalOpen] = useState(false)
     return (
-        <div className="flex justify-end p-2">
-            <div className="flex items-center gap-2">
-                <div className="flex gap-4 h-full items-center rounded-md text-sm font-semibold italic">
-                    <div className="flex gap-1">
-                        <span className="">Letter pieces</span>
-                        <span>1456</span>
+        <div className="relative">
+            <div className="flex justify-end p-2 border-b-2 border-solid border-t-0 border-l-0 border-r-0 border-black">
+                <div className="flex items-center gap-2 justify-between w-full">
+                    <div>
+                        <span className=" font-semibold text-2xl px-2 py-2">docs.ai</span>
+                    </div>
+                    <div className="flex justify-center items-center  gap-4">
+                        <div className="flex h-full items-center rounded-md text-sm font-semibold">
+                            <div className="flex gap-1">
+                                <span className="">Letter pieces</span>
+                                <span>1456</span>
+                            </div>
+                        </div>
+                        <button
+                            onClick={() => {
+                                setIsUserModalOpen(!isUserModalOpen)
+                            }}
+                            className="w-10 h-10 rounded-full overflow-clip relative"
+                        >
+                            <Image src={user.photoURL} alt="profile-pic" className="w-full" fill />
+                        </button>
                     </div>
                 </div>
-                <div className="w-10 h-10 rounded-full overflow-clip relative">
-                    <Image src={user.photoURL} alt="profile-pic" className="w-full" fill />
-                </div>
             </div>
+            <AnimatePresence>{isUserModalOpen && <UserModal />}</AnimatePresence>
         </div>
     )
 }

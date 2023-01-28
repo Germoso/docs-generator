@@ -1,21 +1,32 @@
 import Link from "next/link"
-import { useAuth } from "@/hooks/useAuth"
-import React, { useEffect } from "react"
+import React, { useEffect, useId } from "react"
+import useUserAuth from "../../hooks/useUserAuth"
 import { useRouter } from "next/router"
-import { googleAuth } from "../../firebase/auth"
+import { googleAuth, logOut } from "../../firebase/auth"
 import Button from "@/components/Button"
 import GoogleLogo from "../../components/Logos/GoogleLogo"
 import TypedEffect from "@/components/TypedEffect"
+import { userExist } from "@/firebase/db"
 
 const Login = () => {
-    const user = useAuth()
+    const { status, user } = useUserAuth()
     const router = useRouter()
 
     useEffect(() => {
-        if (user.status === 1) {
-            router.replace("/home")
+        if (status === 1) {
+            userExist(user.uid)
+                .then((exist) => {
+                    console.log(exist)
+                    if (exist) {
+                        router.push("/home")
+                    } else {
+                        logOut()
+                        router.push("/auth/signup")
+                    }
+                })
+                .catch((error) => console.log(error))
         }
-    }, [user])
+    }, [status])
 
     return (
         <div className="h-screen flex flex-col justify-center items-center gap-6">
@@ -28,7 +39,7 @@ const Login = () => {
                         type="secondary"
                         onClick={(e) => {
                             e.preventDefault()
-                            googleAuth()
+                            googleAuth().catch((err) => console.log(err))
                         }}
                         className={"rounded-none flex items-center"}
                     >
