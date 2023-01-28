@@ -15,7 +15,7 @@ export async function getServerSideProps(context) {
     console.log(prompt)
     if (prompt) {
         try {
-            const response = await fetch("http://localhost:3000/api/generate", {
+            const response = await fetch("https://docs-generator-nine.vercel.app/api/generate", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
