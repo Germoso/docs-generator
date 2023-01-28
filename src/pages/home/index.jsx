@@ -47,15 +47,10 @@ const Index = () => {
                     </h2>
                     <div className="flex flex-col mt-2 gap-2">
                         <TemplatesCard
+                            generate={"essay"}
                             title={"Essay"}
                             text={
                                 "Provides a basic structure for the essay that includes an introduction, body and conclusion."
-                            }
-                        />
-                        <TemplatesCard
-                            title={"Essay"}
-                            text={
-                                "Provides a basic structure for the essay that includes an introduction, body and conclusion..."
                             }
                         />
                     </div>
