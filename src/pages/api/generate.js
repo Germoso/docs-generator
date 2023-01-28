@@ -26,12 +26,11 @@ export default async function (req, res) {
             -No incluyas imagenes
             `,
             temperature: 1,
-            max_tokens: 4000,
+            max_tokens: 250,
             top_p: 1,
             frequency_penalty: 0,
             presence_penalty: 0,
         })
-        console.log(completion.data)
         res.status(200).json({ result: completion.data.choices[0].text })
     } catch (error) {
         // Consider adjusting the error handling logic for your use case

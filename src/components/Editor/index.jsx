@@ -24,10 +24,10 @@ const text = `<html>
 <h3>Aprendizaje supervisado</h3>
 <p>El aprendizaje supervisado es el tipo`
 
-const Editor = ({ initialData = { result: "" } }) => {
-    console.log(initialData)
+const EDITOR_HOLDER_ID = "editor"
+
+const Editor = ({ data }) => {
     const [editorContent, setEditorContent] = useState()
-    const EDITOR_HOLDER_ID = "editor"
     const editorRef = useRef(null)
     const [blocks, setBlocks] = useState({})
 
@@ -39,7 +39,7 @@ const Editor = ({ initialData = { result: "" } }) => {
                 header: Header,
             },
             onReady: () => {
-                extractModelsFromText(initialData.result || text).then((data) => {
+                extractModelsFromText(data || text).then((data) => {
                     console.log(data)
                     setBlocks(data)
                     editorRef.current.render({
@@ -63,8 +63,10 @@ const Editor = ({ initialData = { result: "" } }) => {
     }
 
     useEffect(() => {
-        initEditor()
-    }, [])
+        if (data) {
+            initEditor()
+        }
+    }, [data])
 
     const [isOpen, setIsOpen] = useState(false)
     return (
