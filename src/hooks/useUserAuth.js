@@ -11,10 +11,10 @@ const STATUS = {
 const useUserAuth = (onLoading = () => {}, onUnknown = () => {}, onResolve = () => {}) => {
     const [status, setStatus] = useState(STATUS.LOADING)
     const [user, setUser] = useState({
-        uid: undefined,
-        displayName: undefined,
-        email: undefined,
-        photoURL: undefined,
+        uid: "undefined",
+        displayName: "undefined",
+        email: "undefined",
+        photoURL: "",
         tokens: 0,
     })
 

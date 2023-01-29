@@ -15,7 +15,7 @@ const TypedEffect = ({ texts, speed = 20, cursor = true }) => {
         var typed = new Typed($span.current, options)
     }, [])
 
-    return <span className="text-left" ref={$span}></span>
+    return <span className="" ref={$span}></span>
 }
 
 export default TypedEffect

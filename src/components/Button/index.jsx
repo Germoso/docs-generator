@@ -25,7 +25,7 @@ const Button = ({ type = "primary", className, children, onClick = () => {} }) =
             return (
                 <button
                     onClick={onClick}
-                    className={`bg-transparent gap-2 -2 px-4 py-2 text-base border-none hover:border-b-2 border-black ${className} `}
+                    className={`bg-transparent gap-2 -2 px-4 py-2 border-none hover:border-b-2 border-black ${className} `}
                 >
                     {children}
                 </button>

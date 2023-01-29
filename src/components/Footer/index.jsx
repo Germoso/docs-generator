@@ -68,7 +68,7 @@ const Index = () => {
                     viewport={{ once: true }}
                     className="text-xs"
                 >
-                    ©IMPACT SMURFS. All rights reserved
+                    ©docu.ai All rights reserved
                 </motion.span>
                 <motion.div
                     transition={{ duration: 0.5, staggerChildren: 0.3, ease: "easeOut" }}

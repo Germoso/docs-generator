@@ -5,41 +5,27 @@ import { useAuth } from "@/hooks/useAuth"
 import Navbar from "../../components/Navbar/index"
 import TemplatesCard from "@/components/TemplateCard"
 import ProjectCard from "@/components/ProjectCard"
+import useUserAuth from "@/hooks/useUserAuth"
 
 const Index = () => {
-    const [user, setUser] = useState({
-        uid: undefined,
-        displayName: undefined,
-        email: undefined,
-        photoURL: undefined,
-        tokens: 0,
-    })
-    const credentials = useAuth()
+    const { user, setUser, status } = useUserAuth()
     const router = useRouter()
 
     useEffect(() => {
-        switch (credentials.status) {
+        switch (status) {
             case -1:
                 router.push("/")
                 break
             case 1:
-                const { displayName, uid, email, photoURL } = credentials.user
-                setUser({
-                    ...user,
-                    displayName,
-                    uid,
-                    email,
-                    photoURL,
-                })
                 break
             default:
                 break
         }
-    }, [credentials.status])
+    }, [status])
 
     return (
         <>
-            <Navbar credentials={credentials} />
+            <Navbar user={user} />
             <div className="px-4 flex flex-col gap-2">
                 <div className="mt-8">
                     <h2 className="uppercase font-extrabold text-xl border-2 border-solid border-black inline-block border-l-0 border-r-0 border-t-0">

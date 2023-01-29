@@ -1,12 +1,10 @@
 import Image from "next/image"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import coin from "public/coin.png"
 import UserModal from "./UserModal"
 import { AnimatePresence } from "framer-motion"
 
-const Index = ({ credentials }) => {
-    const user = credentials.user
-
+const Index = ({ user }) => {
     const [isUserModalOpen, setIsUserModalOpen] = useState(false)
     return (
         <div className="relative">
@@ -28,7 +26,7 @@ const Index = ({ credentials }) => {
                             }}
                             className="w-10 h-10 rounded-full overflow-clip relative"
                         >
-                            <Image src={user.photoURL} alt="profile-pic" className="w-full" fill />
+                            {user.photoURL && <Image src={user.photoURL} alt="profile-pic" className="w-full" fill />}
                         </button>
                     </div>
                 </div>
