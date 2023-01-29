@@ -29,7 +29,7 @@ export default function Editor({ prompt }) {
     useEffect(() => {
         console.log(Boolean(prompt))
         if (prompt) {
-            fetch("http://localhost:3000/api/generate", {
+            fetch("https://docs-generator-nine.vercel.app/api/generate", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
