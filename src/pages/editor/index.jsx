@@ -43,14 +43,17 @@ export default function Editor({ prompt }) {
             generateData(introductionStructure(prompt)).then((data) => {
                 console.log(data)
                 generateData(requestStructure(data.result)).then((data) => {
+                    console.log(data.result)
                     rowData = rowData.concat("\n", data.result)
                     generateData(bodyStructure(prompt)).then((data) => {
                         console.log(data)
                         generateData(requestStructure(data.result)).then((data) => {
+                            console.log(data.result)
                             rowData = rowData.concat("\n", data.result)
                             generateData(conclusionStructure(prompt)).then((data) => {
                                 console.log(data)
                                 generateData(requestStructure(data.result)).then((data) => {
+                                    console.log(data.result)
                                     console.log(data)
                                     rowData = rowData.concat("\n", data.result)
                                     setData(rowData)
