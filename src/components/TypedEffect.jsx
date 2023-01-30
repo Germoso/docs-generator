@@ -1,7 +1,15 @@
 import Typed from "typed.js"
 import React, { useEffect, useRef } from "react"
 
-const TypedEffect = ({ texts, speed = 20, cursor = true }) => {
+const TypedEffect = ({
+    texts,
+    speed = 20,
+    cursor = true,
+    loop = false,
+    shuffle = false,
+    backSpeed = speed,
+    backDelay = 0,
+}) => {
     const $span = useRef(null)
 
     var options = {
@@ -9,6 +17,10 @@ const TypedEffect = ({ texts, speed = 20, cursor = true }) => {
         typeSpeed: speed,
         backSpeed: speed,
         showCursor: cursor,
+        loop,
+        shuffle,
+        backSpeed,
+        backDelay,
     }
 
     useEffect(() => {

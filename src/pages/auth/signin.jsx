@@ -4,7 +4,7 @@ import useUserAuth from "../../hooks/useUserAuth"
 import { useRouter } from "next/router"
 import { googleAuth, logOut } from "../../firebase/auth"
 import Button from "@/components/Button"
-import GoogleLogo from "../../components/Logos/GoogleLogo"
+import GoogleLogo from "../../components/Icons/GoogleLogo"
 import TypedEffect from "@/components/TypedEffect"
 import { userExist } from "@/firebase/db"
 

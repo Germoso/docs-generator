@@ -1,8 +1,15 @@
-import { useEffect, useState } from "react"
+import { use, useEffect, useState } from "react"
 import dynamic from "next/dynamic"
 const TextEditor = dynamic(() => import("../../components/Editor"), { ssr: false })
 import Navbar from "../../components/Navbar"
 import useUserAuth from "@/hooks/useUserAuth"
+import {
+    bodyStructure,
+    requestStructure,
+    introductionStructure,
+    conclusionStructure,
+} from "@/utils/TypeOfDocuments/essay"
+import Layout from "@/components/Layout"
 
 const text = `<html>
 <head>
@@ -22,24 +29,95 @@ const text = `<html>
 <h3>Aprendizaje supervisado</h3>
 <p>El aprendizaje supervisado es el tipo`
 
+const API_URL = process.env.API_URL
+
 export default function Editor({ prompt }) {
     const { user } = useUserAuth()
-    const [data, setData] = useState(null)
+    const [data, setData] = useState()
+    let rowData = ""
+
+    useEffect(() => {
+        console.log(data)
+    }, [data])
 
     useEffect(() => {
         console.log(Boolean(prompt))
         if (prompt) {
-            fetch("https://docs-generator-nine.vercel.app/api/generate", {
+            fetch(api_url, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ prompt: prompt }),
+                body: JSON.stringify({ prompt: introductionStructure(prompt) }),
             })
                 .then((res) => res.json())
                 .then((data) => {
                     console.log(data)
-                    setData(data.result)
+                    fetch(api_url, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({ prompt: requestStructure(data.result) }),
+                    })
+                        .then((res) => res.json())
+                        .then((data) => {
+                            rowData = rowData.concat("\n", data.result)
+                            fetch(api_url, {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json",
+                                },
+                                body: JSON.stringify({ prompt: bodyStructure(prompt) }),
+                            })
+                                .then((res) => res.json())
+                                .then((data) => {
+                                    console.log(data)
+
+                                    fetch(api_url, {
+                                        method: "POST",
+                                        headers: {
+                                            "Content-Type": "application/json",
+                                        },
+                                        body: JSON.stringify({ prompt: requestStructure(data.result) }),
+                                    })
+                                        .then((res) => res.json())
+                                        .then((data) => {
+                                            rowData = rowData.concat("\n", data.result)
+
+                                            fetch(api_url, {
+                                                method: "POST",
+                                                headers: {
+                                                    "Content-Type": "application/json",
+                                                },
+                                                body: JSON.stringify({ prompt: conclusionStructure(prompt) }),
+                                            })
+                                                .then((res) => res.json())
+                                                .then((data) => {
+                                                    fetch(api_url, {
+                                                        method: "POST",
+                                                        headers: {
+                                                            "Content-Type": "application/json",
+                                                        },
+                                                        body: JSON.stringify({ prompt: requestStructure(data.result) }),
+                                                    })
+                                                        .then((res) => res.json())
+                                                        .then((data) => {
+                                                            console.log(data)
+
+                                                            rowData = rowData.concat("\n", data.result)
+                                                            setData(rowData)
+                                                            console.log("LISTO")
+                                                        })
+                                                        .catch((error) => console.log(error))
+                                                })
+                                                .catch((error) => console.log(error))
+                                        })
+                                        .catch((error) => console.log(error))
+                                })
+                                .catch((error) => console.log(error))
+                        })
+                        .catch((error) => console.log(error))
                 })
                 .catch((error) => console.log(error))
         }
@@ -47,8 +125,8 @@ export default function Editor({ prompt }) {
 
     return (
         <>
-            <Navbar user={user} />
-            <div className="px-4 mt-10">
+            <Layout user={user} />
+            <div className="px-4 mt-4">
                 <TextEditor data={prompt ? data : text} />
             </div>
         </>

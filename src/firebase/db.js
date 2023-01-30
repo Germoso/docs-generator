@@ -55,7 +55,7 @@ export const userExist = async (id) => {
     try {
         const docRef = doc(db, "users", id)
         const docSnap = await getDoc(docRef)
-        return docSnap.exists()
+        return { exist: docSnap.exists(), user: docSnap.data() }
     } catch (error) {
         return error
     }

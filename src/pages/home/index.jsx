@@ -6,12 +6,14 @@ import Navbar from "../../components/Navbar/index"
 import TemplatesCard from "@/components/TemplateCard"
 import ProjectCard from "@/components/ProjectCard"
 import useUserAuth from "@/hooks/useUserAuth"
+import { userExist } from "@/firebase/db"
 
 const Index = () => {
-    const { user, setUser, status } = useUserAuth()
+    const { userAuthData, user, status } = useUserAuth()
     const router = useRouter()
 
     useEffect(() => {
+        console.log(user)
         switch (status) {
             case -1:
                 router.push("/")
@@ -51,6 +53,13 @@ const Index = () => {
                     </div>
                 </div>
             </div>
+            <button
+                onClick={() => {
+                    userExist(user.uid).then((res) => console.log(res.data))
+                }}
+            >
+                onclick
+            </button>
         </>
     )
 }

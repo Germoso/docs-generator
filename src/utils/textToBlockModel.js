@@ -1,68 +1,75 @@
 const extractModelsFromText = async (textToConvert) => {
-    const extractHeadersModelsFromText = () => {
-        const extractHeaderModelFromText = (i) => {
-            const headerRegex = new RegExp(`<h${i}>(.*?)<\/h${i}>`)
-            const match = textToConvert.match(headerRegex)
-            if (match) {
-                const header = match[1]
-                textToConvert = textToConvert
-                    .replace(headerRegex, "")
-                    .trim()
-                    .replace(/(\r\n|\n|\r)/gm, "")
-                if (match.length > 0) {
-                    return {
-                        type: "header",
-                        data: {
-                            text: header,
-                            level: i,
-                        },
-                    }
-                }
-            }
-        }
-        for (let i = 1; i <= 6; i++) {
-            const header = extractHeaderModelFromText(i)
-            if (header) return header
-        }
-    }
-
-    const extractParagraphModelFromText = () => {
-        const paragraphRegex = /<p>(.*?)<\/p>/
-        const match = textToConvert.match(paragraphRegex)
-        if (match) {
-            const paragraph = match[1]
-            textToConvert = textToConvert
-                .replace(paragraphRegex, "")
-                .trim()
-                .replace(/(\r\n|\n|\r)/gm, "")
-
-            if (match.length > 0) {
-                return {
-                    type: "paragraph",
-                    data: {
-                        text: paragraph,
-                        level: 2,
-                    },
-                }
+    const extractTextFromHTML = (node, tagsToExtract) => {
+        const tags = tagsToExtract.map((tagToExtract) => tagToExtract.tag)
+        console.log(tags)
+        let text = ""
+        if (node.nodeType === Node.TEXT_NODE) {
+            text = node.textContent
+        } else if (node.nodeType === Node.ELEMENT_NODE && tags.includes(node.tagName)) {
+            const [tagToExtract] = tagsToExtract.filter((tag) => tag.tag === node.tagName)
+            text = node.textContent
+            node.remove()
+            return {
+                type: tagToExtract.type,
+                data: {
+                    text,
+                    level: tagToExtract.level,
+                },
             }
         }
     }
+
+    function getBlocks(node, tagsToExtract) {
+        const array = []
+        for (let i = 0; i < node.childNodes.length; i++) {
+            const text = extractTextFromHTML(node.childNodes[i], tagsToExtract)
+            array.push(text)
+        }
+        return array
+    }
+
+    let tagsToExtract = [
+        {
+            type: "header",
+            tag: "H1",
+            level: 1,
+        },
+        {
+            type: "header",
+            tag: "H2",
+            level: 2,
+        },
+        {
+            type: "header",
+            tag: "H3",
+            level: 3,
+        },
+        {
+            type: "header",
+            tag: "H4",
+            level: 4,
+        },
+        {
+            type: "header",
+            tag: "H5",
+            level: 5,
+        },
+        {
+            type: "paragraph",
+            tag: "H6",
+            level: 6,
+        },
+        {
+            type: "paragraph",
+            tag: "P",
+        },
+    ]
 
     return new Promise((resolve, reject) => {
-        const blocks = []
         if (textToConvert) {
-            const interval = setInterval(() => {
-                const headerModel = extractHeadersModelsFromText()
-                if (headerModel) blocks.push(headerModel)
-                const paragraphModel = extractParagraphModelFromText()
-                if (paragraphModel) blocks.push(paragraphModel)
-            }, 100)
-            setTimeout(async () => {
-                clearInterval(interval)
-                console.log(blocks)
-                console.log(blocks)
-                resolve(blocks)
-            }, 3000)
+            let parser = new DOMParser()
+            let doc = parser.parseFromString(textToConvert, "text/html")
+            resolve(getBlocks(doc.body, tagsToExtract))
         }
     })
 }

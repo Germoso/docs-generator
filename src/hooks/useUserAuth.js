@@ -1,6 +1,7 @@
 import { onAuthStateChanged } from "firebase/auth"
 import { useState, useEffect } from "react"
 import { auth } from "@/firebase/auth"
+import { userExist } from "@/firebase/db"
 
 const STATUS = {
     UNKNOWN: -1,
@@ -10,14 +11,14 @@ const STATUS = {
 
 const useUserAuth = (onLoading = () => {}, onUnknown = () => {}, onResolve = () => {}) => {
     const [status, setStatus] = useState(STATUS.LOADING)
-    const [user, setUser] = useState({
+    const [userAuthData, setUserAuthData] = useState({
         uid: "undefined",
         displayName: "undefined",
         email: "undefined",
         photoURL: "",
         tokens: 0,
     })
-
+    const [user, setUser] = useState({})
     useEffect(() => {
         switch (status) {
             case 0:
@@ -37,16 +38,20 @@ const useUserAuth = (onLoading = () => {}, onUnknown = () => {}, onResolve = () 
         onAuthStateChanged(auth, (credentials) => {
             if (credentials) {
                 const { displayName, uid, email, photoURL } = credentials
-                setUser({
-                    ...user,
+                setUserAuthData({
+                    ...userAuthData,
                     displayName,
                     uid,
                     email,
                     photoURL,
                 })
                 setStatus(STATUS.LOGGED)
+                userExist(uid).then((res) => {
+                    console.log(res)
+                    setUser(res.user)
+                })
             } else {
-                setUser({
+                setUserAuthData({
                     photoURL: "",
                 })
                 setStatus(STATUS.UNKNOWN)
@@ -54,7 +59,7 @@ const useUserAuth = (onLoading = () => {}, onUnknown = () => {}, onResolve = () 
         })
     }, [])
 
-    return { user, setUser, status }
+    return { userAuthData, status, user }
 }
 
 export default useUserAuth

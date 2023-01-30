@@ -19,18 +19,16 @@ export default async function (req, res) {
     try {
         const completion = await openai.createCompletion({
             model: "text-davinci-003",
-            prompt: `
-            Haz un ensayo de 100 paginas sobre "${prompt}" dentro de etiquetas html con las siguientes caracteristicas:
-            -Parrafos cortos.
-            -Subtitulos (Si es necesario)
-            -No incluyas imagenes
-            `,
+            prompt: prompt,
             temperature: 1,
-            max_tokens: 250,
+            max_tokens: 3800,
             top_p: 1,
             frequency_penalty: 0,
             presence_penalty: 0,
         })
+        console.log(completion.request)
+        console.log(completion.data)
+
         res.status(200).json({ result: completion.data.choices[0].text })
     } catch (error) {
         // Consider adjusting the error handling logic for your use case

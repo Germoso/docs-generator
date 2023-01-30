@@ -5,8 +5,33 @@ import { makePDF } from "@/utils/makePDF"
 import { extractModelsFromText } from "@/utils/textToBlockModel"
 import Modal from "./Modal"
 import Button from "../Button"
+import LoadingCircle from "../Icons/LoadingCircle"
+import TypedEffect from "../TypedEffect"
 
 const EDITOR_HOLDER_ID = "editor"
+var loadingMessages = [
+    "Loading, please stand by...",
+    "Preparing information...",
+    "Loading content...",
+    "Please wait while your request is being processed...",
+    "Getting data, please wait...",
+    "Loading items, please wait...",
+    "Initializing, please wait...",
+    "Please wait while the task completes...",
+    "Loading resources, please wait...",
+    "Processing your request, please wait...",
+    "The document is loading...",
+    "The document is being generated...",
+    "Loading content...",
+    "Preparing information...",
+    "Collecting data...",
+    "Please wait a moment...",
+    "Loading interface...",
+    "Initializing system...",
+    "Loading resources...",
+    "Please wait while the operation completes...",
+    "This process may take a few seconds...",
+]
 
 const Editor = ({ data }) => {
     const [editorContent, setEditorContent] = useState()
@@ -54,11 +79,29 @@ const Editor = ({ data }) => {
     return (
         <>
             <div id={EDITOR_HOLDER_ID}></div>
-            <div className="flex justify-end">
-                <Button onClick={() => setIsOpen(true)} type="secondary">
-                    Export
-                </Button>
-            </div>
+            {data ? (
+                <div className="flex justify-end">
+                    <Button onClick={() => setIsOpen(true)} type="secondary">
+                        Export
+                    </Button>
+                </div>
+            ) : (
+                <div className="">
+                    <span className="uppercase font-extrabold">
+                        <TypedEffect
+                            texts={loadingMessages}
+                            loop={true}
+                            speed={30}
+                            shuffle={true}
+                            backSpeed={15}
+                            backDelay={(Math.floor(Math.random() * (3 - 1 + 1)) + 1) * 5000}
+                        />
+                    </span>
+                    <div className="absolute right-2 bottom-2 w-6">
+                        <LoadingCircle />
+                    </div>
+                </div>
+            )}
             {isOpen && <Modal isOpen={isOpen} setIsOpen={setIsOpen} blocks={editorContent} getData={getData} />}
         </>
     )
