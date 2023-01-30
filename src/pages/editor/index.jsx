@@ -29,7 +29,7 @@ const text = `<html>
 <h3>Aprendizaje supervisado</h3>
 <p>El aprendizaje supervisado es el tipo`
 
-const api_url = process.env.API_URL
+const api_url = "https://docs-generator-nine.vercel.app/api/generate"
 
 export default function Editor({ prompt }) {
     const { user } = useUserAuth()

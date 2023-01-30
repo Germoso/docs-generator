@@ -15,9 +15,7 @@ var loadingMessages = [
     "Loading content...",
     "Please wait while your request is being processed...",
     "Getting data, please wait...",
-    "Loading items, please wait...",
     "Initializing, please wait...",
-    "Please wait while the task completes...",
     "Loading resources, please wait...",
     "Processing your request, please wait...",
     "The document is loading...",
@@ -26,10 +24,10 @@ var loadingMessages = [
     "Preparing information...",
     "Collecting data...",
     "Please wait a moment...",
-    "Loading interface...",
     "Initializing system...",
     "Loading resources...",
     "Please wait while the operation completes...",
+    "This process may take a few seconds...",
     "This process may take a few seconds...",
 ]
 
@@ -97,7 +95,7 @@ const Editor = ({ data }) => {
                             backDelay={(Math.floor(Math.random() * (3 - 1 + 1)) + 1) * 5000}
                         />
                     </span>
-                    <div className="absolute right-2 bottom-2 w-6">
+                    <div className="absolute right-2 bottom-2 w-10">
                         <LoadingCircle />
                     </div>
                 </div>
