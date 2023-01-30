@@ -12,7 +12,7 @@ import { AiOutlineDollarCircle } from "react-icons/ai"
 import { HiOutlineArrowNarrowRight } from "react-icons/hi"
 import { BsClockHistory } from "react-icons/bs"
 import { TbFileExport } from "react-icons/tb"
-
+import { useEffect } from "react"
 import Link from "next/link"
 import InfoCard from "@/components/InfoCard"
 import Footer from "@/components/Footer"
@@ -37,15 +37,8 @@ const text = `<html>
 <p>El aprendizaje supervisado es el tipo`
 
 export default function Home() {
-    // function onSubmit(event) {
-    //     event.preventDefault()
-    //     router.push({
-    //         pathname: "/editor",
-    //         query: { prompt: animalInput },
-    //     })
-    // }
-
     const router = useRouter()
+
     const login = () => {
         router.push("/auth/signin")
     }
