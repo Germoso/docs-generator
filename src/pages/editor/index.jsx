@@ -29,7 +29,7 @@ const text = `<html>
 <h3>Aprendizaje supervisado</h3>
 <p>El aprendizaje supervisado es el tipo`
 
-const API_URL = process.env.API_URL
+const api_url = process.env.API_URL
 
 export default function Editor({ prompt }) {
     const { user } = useUserAuth()
