@@ -1,7 +1,6 @@
-import { use, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import dynamic from "next/dynamic"
 const TextEditor = dynamic(() => import("../../components/Editor"), { ssr: false })
-import Navbar from "../../components/Navbar"
 import useUserAuth from "@/hooks/useUserAuth"
 import {
     bodyStructure,
@@ -10,6 +9,7 @@ import {
     conclusionStructure,
 } from "@/utils/TypeOfDocuments/essay"
 import Layout from "@/components/Layout"
+import generateData from "@/utils/generateData"
 
 const text = `<html>
 <head>
@@ -29,8 +29,6 @@ const text = `<html>
 <h3>Aprendizaje supervisado</h3>
 <p>El aprendizaje supervisado es el tipo`
 
-const api_url = "https://docs-generator-nine.vercel.app/api/generate"
-
 export default function Editor({ prompt }) {
     const { user } = useUserAuth()
     const [data, setData] = useState()
@@ -41,85 +39,28 @@ export default function Editor({ prompt }) {
     }, [data])
 
     useEffect(() => {
-        console.log(Boolean(prompt))
         if (prompt) {
-            fetch(api_url, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ prompt: introductionStructure(prompt) }),
-            })
-                .then((res) => res.json())
-                .then((data) => {
-                    console.log(data)
-                    fetch(api_url, {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({ prompt: requestStructure(data.result) }),
-                    })
-                        .then((res) => res.json())
-                        .then((data) => {
+            generateData(introductionStructure(prompt)).then((data) => {
+                console.log(data)
+                generateData(requestStructure(data.result)).then((data) => {
+                    rowData = rowData.concat("\n", data.result)
+                    generateData(bodyStructure(prompt)).then((data) => {
+                        console.log(data)
+                        generateData(requestStructure(data.result)).then((data) => {
                             rowData = rowData.concat("\n", data.result)
-                            fetch(api_url, {
-                                method: "POST",
-                                headers: {
-                                    "Content-Type": "application/json",
-                                },
-                                body: JSON.stringify({ prompt: bodyStructure(prompt) }),
-                            })
-                                .then((res) => res.json())
-                                .then((data) => {
+                            generateData(conclusionStructure(prompt)).then((data) => {
+                                console.log(data)
+                                generateData(requestStructure(data.result)).then((data) => {
                                     console.log(data)
-
-                                    fetch(api_url, {
-                                        method: "POST",
-                                        headers: {
-                                            "Content-Type": "application/json",
-                                        },
-                                        body: JSON.stringify({ prompt: requestStructure(data.result) }),
-                                    })
-                                        .then((res) => res.json())
-                                        .then((data) => {
-                                            rowData = rowData.concat("\n", data.result)
-
-                                            fetch(api_url, {
-                                                method: "POST",
-                                                headers: {
-                                                    "Content-Type": "application/json",
-                                                },
-                                                body: JSON.stringify({ prompt: conclusionStructure(prompt) }),
-                                            })
-                                                .then((res) => res.json())
-                                                .then((data) => {
-                                                    fetch(api_url, {
-                                                        method: "POST",
-                                                        headers: {
-                                                            "Content-Type": "application/json",
-                                                        },
-                                                        body: JSON.stringify({ prompt: requestStructure(data.result) }),
-                                                    })
-                                                        .then((res) => res.json())
-                                                        .then((data) => {
-                                                            console.log(data)
-
-                                                            rowData = rowData.concat("\n", data.result)
-                                                            setData(rowData)
-                                                            console.log("LISTO")
-                                                        })
-                                                        .catch((error) => console.log(error))
-                                                })
-                                                .catch((error) => console.log(error))
-                                        })
-                                        .catch((error) => console.log(error))
+                                    rowData = rowData.concat("\n", data.result)
+                                    setData(rowData)
+                                    console.log("LISTO")
                                 })
-                                .catch((error) => console.log(error))
+                            })
                         })
-                        .catch((error) => console.log(error))
+                    })
                 })
-                .catch((error) => console.log(error))
+            })
         }
     }, [])
 
