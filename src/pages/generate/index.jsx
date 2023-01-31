@@ -38,7 +38,7 @@ const Generate = ({ type }) => {
                     onSubmit={(e) => {
                         e.preventDefault()
                         router.push({
-                            pathname: "editor",
+                            pathname: "generate/editor",
                             query: {
                                 prompt: prompt,
                                 tokens: tokensAmount,
