@@ -6,9 +6,10 @@ import Navbar from "../../components/Navbar/index"
 import TemplatesCard from "@/components/TemplateCard"
 import ProjectCard from "@/components/ProjectCard"
 import useUserAuth from "@/hooks/useUserAuth"
-import { userExist } from "@/firebase/db"
+import { getDocuments, userExist } from "@/firebase/db"
 
 const Index = () => {
+    const [documents, setDocuments] = useState([])
     const { userAuthData, user, status } = useUserAuth()
     const router = useRouter()
 
@@ -24,6 +25,15 @@ const Index = () => {
                 break
         }
     }, [status])
+
+    useEffect(() => {
+        if (user.uid) {
+            getDocuments({ id: user.uid }).then((documents) => {
+                console.log(documents)
+                setDocuments(documents)
+            })
+        }
+    }, [user])
 
     return (
         <>
@@ -46,20 +56,22 @@ const Index = () => {
 
                 <div className="mt-8">
                     <h2 className="uppercase font-extrabold text-xl border-2 border-solid border-black inline-block border-l-0 border-r-0 border-t-0">
-                        projects
+                        Documents
                     </h2>
                     <div className="flex flex-col mt-2 gap-2">
-                        <ProjectCard title={"project title"} text={"project text"} />
+                        {documents.map((document) => {
+                            return (
+                                <ProjectCard
+                                    title={document.prompt}
+                                    text={document.content}
+                                    type={document.type}
+                                    key={document.content}
+                                />
+                            )
+                        })}
                     </div>
                 </div>
             </div>
-            <button
-                onClick={() => {
-                    userExist(user.uid).then((res) => console.log(res.data))
-                }}
-            >
-                onclick
-            </button>
         </>
     )
 }

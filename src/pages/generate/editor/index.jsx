@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import dynamic from "next/dynamic"
-const TextEditor = dynamic(() => import("../../components/Editor"), { ssr: false })
+const TextEditor = dynamic(() => import("../../../components/Editor"), { ssr: false })
 import useUserAuth from "@/hooks/useUserAuth"
 import {
     bodyStructure,
@@ -10,19 +10,20 @@ import {
 } from "@/utils/TypeOfDocuments/essay"
 import Layout from "@/components/Layout"
 import generateData from "@/utils/generateData"
-import { text } from "../../utils/text"
-import { debit } from "@/firebase/db"
+import { text } from "../../../utils/text"
+import { addDocument, debit } from "@/firebase/db"
 
-export default function Editor({ prompt, details }) {
-    const [generated, setGenerated] = useState(false)
+export default function Editor({ prompt, details = "", type }) {
     const { user } = useUserAuth()
     const [data, setData] = useState()
-    const [usedTokens, setusedTokens] = useState(0)
+    const [tokens, setTokens] = useState(0)
     let rowData = ""
 
     useEffect(() => {
-        console.log(usedTokens)
-    }, [generated])
+        if (data) {
+            addDocument({ id: user.uid, prompt, text: data, type, total_tokens: tokens })
+        }
+    }, [data])
 
     useEffect(() => {
         const id = user.uid
@@ -30,36 +31,35 @@ export default function Editor({ prompt, details }) {
             console.log(user)
             generateData(introductionStructure(prompt)).then((data) => {
                 console.log(data)
-                setusedTokens((prev) => prev + data.usage.total_tokens)
                 debit(id, data.usage.total_tokens)
+                setTokens((prev) => prev + data.usage.total_tokens)
                 generateData(requestStructure(data.result, details)).then((data) => {
                     console.log(data)
-                    setusedTokens((prev) => prev + data.usage.total_tokens)
                     rowData = rowData.concat("\n", data.result)
                     debit(id, data.usage.total_tokens)
+                    setTokens((prev) => prev + data.usage.total_tokens)
 
                     generateData(bodyStructure(prompt)).then((data) => {
                         console.log(data)
-                        setusedTokens((prev) => prev + data.usage.total_tokens)
                         debit(id, data.usage.total_tokens)
+                        setTokens((prev) => prev + data.usage.total_tokens)
 
                         generateData(requestStructure(data.result, details)).then((data) => {
                             console.log(data)
                             rowData = rowData.concat("\n", data.result)
-                            setusedTokens((prev) => prev + data.usage.total_tokens)
                             debit(id, data.usage.total_tokens)
+                            setTokens((prev) => prev + data.usage.total_tokens)
 
                             generateData(conclusionStructure(prompt, details)).then((data) => {
                                 console.log(data)
-                                setusedTokens((prev) => prev + data.usage.total_tokens)
                                 debit(id, data.usage.total_tokens)
+                                setTokens((prev) => prev + data.usage.total_tokens)
 
                                 generateData(requestStructure(data.result, details)).then((data) => {
                                     console.log(data)
-                                    setusedTokens((prev) => prev + data.usage.total_tokens)
                                     rowData = rowData.concat("\n", data.result)
+                                    setTokens((prev) => prev + data.usage.total_tokens)
                                     setData(rowData)
-                                    setGenerated(true)
                                     debit(id, data.usage.total_tokens)
                                 })
                             })
@@ -75,18 +75,26 @@ export default function Editor({ prompt, details }) {
             <Layout user={user} />
             <div className="px-4 mt-4">
                 <TextEditor data={prompt ? data : text} />
+                <button
+                    onClick={() => {
+                        addDocument({ id: user.uid, prompt, text: data, type, total_tokens: tokens })
+                    }}
+                >
+                    Save data
+                </button>
             </div>
         </>
     )
 }
 
 export async function getServerSideProps(context) {
-    const { prompt, details } = context.query
+    const { prompt, details, type } = context.query
 
     return {
         props: {
             prompt: prompt ? prompt : false,
-            details: details,
+            details: details || false,
+            type,
         },
     }
 }

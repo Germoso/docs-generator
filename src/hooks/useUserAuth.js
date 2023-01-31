@@ -46,6 +46,7 @@ const useUserAuth = (onLoading = () => {}, onUnknown = () => {}, onResolve = () 
                     email,
                     photoURL,
                     tokens: 0,
+                    documents: [],
                 })
                 setStatus(STATUS.LOGGED)
                 console.log(uid)

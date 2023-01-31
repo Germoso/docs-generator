@@ -43,6 +43,7 @@ const Generate = ({ type }) => {
                                 prompt: prompt,
                                 tokens: tokensAmount,
                                 details: details,
+                                type,
                             },
                         })
                     }}

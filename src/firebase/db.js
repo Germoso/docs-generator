@@ -1,10 +1,8 @@
 import { initializeApp } from "firebase/app"
-import { doc, getFirestore, getDoc, setDoc, updateDoc } from "firebase/firestore"
+import { doc, getFirestore, getDoc, setDoc, updateDoc, arrayUnion } from "firebase/firestore"
 
 import "firebase/firestore"
 
-// TODO: Replace the following with your app's Firebase project configuration
-// See: https://firebase.google.com/docs/web/learn-more#config-object
 const firebaseConfig = {
     apiKey: "AIzaSyDQI0cZ17eGqLAcawO4N5ISE9oK_4FIt60",
     authDomain: "edu-ai-275af.firebaseapp.com",
@@ -15,10 +13,7 @@ const firebaseConfig = {
     measurementId: "G-7VZ97LY90S",
 }
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig)
-
-// Initialize Cloud Firestore and get a reference to the service
 const db = getFirestore(app)
 
 export const createUserIfDontExist = async (id, data) => {
@@ -74,5 +69,34 @@ export const debit = async (id, tokens = 0) => {
         }
     } catch (error) {
         console.log(error)
+    }
+}
+
+export const addDocument = async ({ id, prompt, text, type, total_tokens }) => {
+    console.log(prompt)
+    try {
+        await updateDoc(doc(db, "users", id), {
+            documents: arrayUnion({
+                prompt,
+                text,
+                type,
+                usage: {
+                    total_tokens,
+                },
+            }),
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const getDocuments = async ({ id }) => {
+    console.log(id)
+    try {
+        const docRef = doc(db, "users", id)
+        const docSnap = await getDoc(docRef)
+        return docSnap.data().documents
+    } catch (error) {
+        return error
     }
 }
