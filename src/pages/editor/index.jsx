@@ -10,7 +10,7 @@ import {
 } from "@/utils/TypeOfDocuments/essay"
 import Layout from "@/components/Layout"
 import generateData from "@/utils/generateData"
-import { text } from "./text"
+import { text } from "../../utils/text"
 import { debit } from "@/firebase/db"
 
 export default function Editor({ prompt, details }) {
