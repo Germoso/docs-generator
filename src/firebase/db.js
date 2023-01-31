@@ -22,7 +22,8 @@ const app = initializeApp(firebaseConfig)
 const db = getFirestore(app)
 
 export const createUserIfDontExist = async (id, data) => {
-    if (await userExist(id)) {
+    const res = await userExist(id)
+    if (res.exist) {
         return false
     } else {
         return await createUser(data)

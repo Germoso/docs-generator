@@ -37,6 +37,7 @@ const useUserAuth = (onLoading = () => {}, onUnknown = () => {}, onResolve = () 
     useEffect(() => {
         onAuthStateChanged(auth, (credentials) => {
             if (credentials) {
+                console.log(credentials)
                 const { displayName, uid, email, photoURL } = credentials
                 setUserAuthData({
                     ...userAuthData,
@@ -44,9 +45,12 @@ const useUserAuth = (onLoading = () => {}, onUnknown = () => {}, onResolve = () 
                     uid,
                     email,
                     photoURL,
+                    tokens: 0,
                 })
                 setStatus(STATUS.LOGGED)
+                console.log(uid)
                 userExist(uid).then((res) => {
+                    console.log("USER EXIST")
                     console.log(res)
                     setUser(res.user)
                 })

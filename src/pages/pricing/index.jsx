@@ -5,10 +5,13 @@ import { BsWallet2 } from "react-icons/bs"
 import { BiTime, BiLock } from "react-icons/bi"
 import TypedEffect from "@/components/TypedEffect"
 import TopBar from "@/components/TopBar"
+import Footer from "../../components/Footer"
+import { useRouter } from "next/router"
 
 // 2600 Caracteres 400 palabras
 
 const Pricing = () => {
+    const router = useRouter()
     return (
         <>
             <TopBar />
@@ -24,7 +27,14 @@ const Pricing = () => {
                         </p>
                     </article>
                     <div className="flex gap-2">
-                        <Button className={"uppercase text-xs"}>Get Started</Button>
+                        <Button
+                            onClick={() => {
+                                router.push("/auth/signup")
+                            }}
+                            className={"uppercase text-xs"}
+                        >
+                            Get Started
+                        </Button>
                         <Button type="secondary" className={"uppercase text-xs"}>
                             <a href="#prices" className="no-underline text-black hover:text-white">
                                 See prices
@@ -51,7 +61,7 @@ const Pricing = () => {
                             text="Our service is immediate, with which you will be able to generate your texts, documents, essays, etc. in just a few minutes and with just a few steps."
                         />
                     </section>
-                    <section className="flex flex-col items-center h-[70vh] justify-center gap-4">
+                    <section className="flex flex-col items-center h-[80vh] justify-center gap-4">
                         <h2 className="font-extrabold text-center">Get all the benefits at the right price</h2>
                         <div className="w-full" id="prices">
                             <table className="text-center border-2 border-black border-solid rounded-xl w-full">
@@ -89,6 +99,7 @@ const Pricing = () => {
                             </span>
                         </div>
                     </section>
+                    <Footer />
                 </div>
             </div>
         </>

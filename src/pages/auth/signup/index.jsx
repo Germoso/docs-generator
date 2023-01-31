@@ -9,17 +9,23 @@ import { createUserIfDontExist } from "@/firebase/db"
 import { googleAuth } from "@/firebase/auth"
 
 const Signup = () => {
-    const { user, setUser, status } = useUserAuth()
+    const { user, userAuthData, status } = useUserAuth()
 
     const router = useRouter()
     useEffect(() => {
+        console.log(status)
+        console.log(userAuthData)
         switch (status) {
             case 1:
-                createUserIfDontExist(user.uid, user)
+                console.log(user.uid)
+                createUserIfDontExist(userAuthData.uid, userAuthData)
                     .then((created) => {
+                        console.log("CREATED")
+                        console.log(created)
                         if (created) {
                             router.replace("/auth/signup/onboarding")
                         } else {
+                            console.log("no creado")
                             router.replace("/auth/signin")
                         }
                     })
@@ -27,7 +33,7 @@ const Signup = () => {
             default:
                 break
         }
-    }, [status])
+    }, [status, userAuthData])
 
     useEffect(() => {}, [])
 
