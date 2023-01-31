@@ -56,7 +56,7 @@ export default function Home() {
                     <section className="h-screen  flex flex-col gap-5 justify-center items-center">
                         <div className="flex items-center flex-col gap-1">
                             <div className="w-2/6 flex flex-col items-center">
-                                <Image src={logo} alt="logo" className="w-full h-auto " />
+                                {/* <Image src={logo} alt="logo" className="w-full h-auto " /> */}
                                 <h1 className="text-6xl">
                                     <TypedEffect speed={150} texts={["docu.ai"]} cursor={false} />
                                 </h1>
@@ -123,7 +123,7 @@ export default function Home() {
                                 //         <HiOutlineArrowNarrowRight className="text-4xl text-black relative top-[2px]" />
                                 //     </Link>
                                 // }
-                                icon={<BsClockHistory className="text-5xl opacity-80" />}
+                                icon={<BsClockHistory className="text-4xl opacity-80" />}
                             />
                             <InfoCard
                                 text={"Export your documents directly to PDF or DOCX and access them at any time."}
@@ -142,6 +142,7 @@ export default function Home() {
                                 icon={<TbFileExport className="text-5xl opacity-80" />}
                             />
                             <InfoCard
+                                className="shadow-xl"
                                 text={"On our platform, we offer affordable prices. "}
                                 title="Affordable prices for all"
                                 link={

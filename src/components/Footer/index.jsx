@@ -23,7 +23,7 @@ const Index = () => {
             viewport={{ once: true }}
             className="container mx-auto px-6 text-paragraph text-sm py-4 flex flex-col gap-2"
         >
-            <section className="flex flex-col justify-start gap-6">
+            <section className="flex flex-col justify-start ">
                 <div className="flex flex-col gap-1 overflow-hidden">
                     <motion.div
                         transition={{ duration: 0.8 }}
@@ -32,7 +32,8 @@ const Index = () => {
                         viewport={{ once: true }}
                         className="w-16"
                     >
-                        <Image src={logo} alt={"logo"} className={"w-full h-auto"} />
+                        {/* <Image src={logo} alt={"logo"} className={"w-full h-auto"} /> */}
+                        <span className="font-bold text-base">docu.ai</span>
                     </motion.div>
                     <div className="overflow-hidden">
                         <motion.p
@@ -42,7 +43,8 @@ const Index = () => {
                             viewport={{ once: true }}
                             className="text-xs"
                         >
-                            Lorem ipsum, dolor sit amet consectetur adipisicing elit. In, eum?
+                            Hecho con &lt;3 por el equipo de docu.ai. Utilizamos inteligencia artificial para ayudarte a
+                            generar documentos con mayor rapidez y eficiencia. ¡Gracias por elegirnos!
                         </motion.p>
                     </div>
                 </div>
@@ -68,9 +70,10 @@ const Index = () => {
                     viewport={{ once: true }}
                     className="text-xs"
                 >
-                    ©docu.ai All rights reserved
+                    ©docu.ai
                 </motion.span>
-                <motion.div
+                <span className="text-xs">All rights reserved</span>
+                {/* <motion.div
                     transition={{ duration: 0.5, staggerChildren: 0.3, ease: "easeOut" }}
                     whileInView={"animate"}
                     viewport={{ once: true }}
@@ -87,7 +90,7 @@ const Index = () => {
                     >
                         <FaInstagram className="" />
                     </motion.div>
-                </motion.div>
+                </motion.div> */}
             </section>
         </motion.footer>
     )
