@@ -42,7 +42,7 @@ const Generate = ({ type }) => {
                             query: {
                                 prompt: prompt,
                                 tokens: tokensAmount,
-                                details: details,
+                                details,
                                 type,
                             },
                         })

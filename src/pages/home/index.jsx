@@ -63,7 +63,7 @@ const Index = () => {
                             return (
                                 <ProjectCard
                                     title={document.prompt}
-                                    text={document.content}
+                                    details={document.details}
                                     type={document.type}
                                     key={document.content}
                                 />

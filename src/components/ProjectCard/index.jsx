@@ -1,7 +1,7 @@
 import React from "react"
 import { FiEdit } from "react-icons/fi"
 
-const ProjectCard = ({ text, title, type }) => {
+const ProjectCard = ({ details, title, type }) => {
     return (
         <div className=" relative flex justify-center flex-col items-start border-black border-solid border rounded-sm gap-2 shadow-md">
             <div className="flex flex-col w-full ">
@@ -13,7 +13,7 @@ const ProjectCard = ({ text, title, type }) => {
                     <span className="text-xs opacity-80 uppercase ">Details</span>
                     <textarea
                         placeholder="No details..."
-                        value={text}
+                        value={details}
                         readOnly
                         className={"w-full border-none resize-none focus:outline-none opacity-90"}
                     ></textarea>

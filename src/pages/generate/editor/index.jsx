@@ -21,7 +21,7 @@ export default function Editor({ prompt, details = "", type }) {
 
     useEffect(() => {
         if (data) {
-            addDocument({ id: user.uid, prompt, text: data, type, total_tokens: tokens })
+            addDocument({ id: user.uid, prompt, details, type, total_tokens: tokens })
         }
     }, [data])
 
@@ -93,7 +93,7 @@ export async function getServerSideProps(context) {
     return {
         props: {
             prompt: prompt ? prompt : false,
-            details: details || false,
+            details: details || "false",
             type,
         },
     }

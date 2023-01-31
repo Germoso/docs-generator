@@ -72,13 +72,13 @@ export const debit = async (id, tokens = 0) => {
     }
 }
 
-export const addDocument = async ({ id, prompt, text, type, total_tokens }) => {
+export const addDocument = async ({ id, prompt, details, type, total_tokens }) => {
     console.log(prompt)
     try {
         await updateDoc(doc(db, "users", id), {
             documents: arrayUnion({
                 prompt,
-                text,
+                details,
                 type,
                 usage: {
                     total_tokens,
