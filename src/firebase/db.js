@@ -60,3 +60,18 @@ export const userExist = async (id) => {
         return error
     }
 }
+
+export const debit = async (id, tokens = 0) => {
+    console.log(id)
+    try {
+        const docSnap = await getDoc(doc(db, "users", id))
+        if (docSnap.exists()) {
+            const currentAmountOfTokens = docSnap.data().tokens
+            return await updateDoc(doc(db, "users", id), {
+                tokens: currentAmountOfTokens - tokens,
+            })
+        }
+    } catch (error) {
+        console.log(error)
+    }
+}

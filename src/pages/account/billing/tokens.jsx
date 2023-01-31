@@ -1,5 +1,4 @@
-import { addTokensToUser } from "@/firebase/buyTokens"
-import { useAuth } from "@/hooks/useAuth"
+import { addTokensToUser } from "@/firebase/addTokensToUser"
 import useUserAuth from "@/hooks/useUserAuth"
 import React, { useEffect } from "react"
 

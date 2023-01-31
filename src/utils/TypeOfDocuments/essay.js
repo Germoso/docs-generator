@@ -34,15 +34,16 @@ export const conclusionStructure = (prompt) => {
     `
 }
 
-export const requestStructure = (prompt) => {
+export const requestStructure = (prompt, details) => {
     return `
     Desarrolla extensamente lo siguiente dentro de etiquetas html: 
         ${prompt}
 
     Debe de cumplir con las siguientes caracteristicas: 
-        - parrafos separados en etiquetas <p> individuales
-        - de 2 a 3 parrafos minimos por tema
-        - Titulos y subtitulos (si es necesario)
-        - No imagenes
+        ${details}
+        parrafos separados en etiquetas <p> individuales
+        de 2 a 3 parrafos minimos por tema
+        Titulos y subtitulos (si es necesario)
+        No imagenes
     `
 }

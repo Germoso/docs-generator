@@ -5,7 +5,6 @@ import UserModal from "./UserModal"
 import { AnimatePresence } from "framer-motion"
 
 const Index = ({ user }) => {
-    console.log(user)
     const [isUserModalOpen, setIsUserModalOpen] = useState(false)
     return (
         <div className="sticky left-0 top-0 w-full bg-white z-[999] ">
