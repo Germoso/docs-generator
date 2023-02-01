@@ -21,12 +21,11 @@ const Editor = ({ index }) => {
     }, [user])
 
     return (
-        <>
-            <Layout user={user} />
+        <Layout>
             <div className="px-4 mt-4">
                 <TextEditor data={data} index={index} user={user} mode="edit" />
             </div>
-        </>
+        </Layout>
     )
 }
 
