@@ -19,11 +19,11 @@ export default function Editor({ prompt, details = "", type }) {
     const [tokens, setTokens] = useState(0)
     let rowData = ""
 
-    useEffect(() => {
-        if (data) {
-            addDocument({ id: user.uid, prompt, details, type, total_tokens: tokens })
-        }
-    }, [data])
+    // useEffect(() => {
+    //     if (data) {
+    //         addDocument({ id: user.uid, prompt, details, type, total_tokens: tokens, content: {} })
+    //     }
+    // }, [data])
 
     useEffect(() => {
         const id = user.uid
@@ -74,14 +74,16 @@ export default function Editor({ prompt, details = "", type }) {
         <>
             <Layout user={user} />
             <div className="px-4 mt-4">
-                <TextEditor data={prompt ? data : text} />
-                <button
-                    onClick={() => {
-                        addDocument({ id: user.uid, prompt, text: data, type, total_tokens: tokens })
+                <TextEditor
+                    data={prompt ? data : text}
+                    user={user}
+                    generateSave
+                    createDoc={(content) => {
+                        console.log(content)
+                        addDocument({ id: user.uid, prompt, details, type, total_tokens: tokens, content })
                     }}
-                >
-                    Save data
-                </button>
+                    mode="generate"
+                />
             </div>
         </>
     )
@@ -93,7 +95,7 @@ export async function getServerSideProps(context) {
     return {
         props: {
             prompt: prompt ? prompt : false,
-            details: details || "false",
+            details: details || "",
             type,
         },
     }

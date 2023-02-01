@@ -7,6 +7,7 @@ import Modal from "./Modal"
 import Button from "../Button"
 import LoadingCircle from "../Icons/LoadingCircle"
 import TypedEffect from "../TypedEffect"
+import { getDocuments, updateDocumentBlocks } from "@/firebase/db"
 
 const EDITOR_HOLDER_ID = "editor"
 var loadingMessages = [
@@ -31,10 +32,10 @@ var loadingMessages = [
     "This process may take a few seconds...",
 ]
 
-const Editor = ({ data }) => {
+const Editor = ({ data, user, index, mode, createDoc }) => {
     const [editorContent, setEditorContent] = useState()
     const editorRef = useRef(null)
-    const [blocks, setBlocks] = useState({})
+    const [blocks, setBlocks] = useState()
 
     const initEditor = () => {
         editorRef.current = new EditorJS({
@@ -44,13 +45,25 @@ const Editor = ({ data }) => {
                 header: Header,
             },
             onReady: () => {
-                extractModelsFromText(data).then((data) => {
-                    console.log(data)
-                    setBlocks(data)
-                    editorRef.current.render({
-                        blocks: data,
-                    })
-                })
+                switch (mode) {
+                    case "generate":
+                        extractModelsFromText(data).then((content) => {
+                            console.log(content)
+                            editorRef.current.render({
+                                blocks: content,
+                            })
+                            createDoc(content)
+                        })
+                        break
+                    case "edit":
+                        editorRef.current.render({
+                            blocks: data,
+                        })
+                        break
+
+                    default:
+                        break
+                }
             },
         })
     }
@@ -78,10 +91,28 @@ const Editor = ({ data }) => {
         <>
             <div id={EDITOR_HOLDER_ID}></div>
             {data ? (
-                <div className="flex justify-end">
+                <div
+                    className={
+                        mode === "preview" ? "flex w-full justify-end" : "fixed right-2 bottom-2 z-[999] flex gap-2"
+                    }
+                >
                     <Button onClick={() => setIsOpen(true)} type="secondary">
                         Export
                     </Button>
+
+                    {mode === "edit" && (
+                        <Button
+                            onClick={async () => {
+                                const blocks = await editorRef.current.save()
+                                const documents = await getDocuments({ id: user.uid })
+                                documents[index].content = blocks
+                                updateDocumentBlocks({ id: user.uid, documents })
+                            }}
+                            type="secondary"
+                        >
+                            save
+                        </Button>
+                    )}
                 </div>
             ) : (
                 <div className="">

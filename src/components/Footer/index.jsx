@@ -43,8 +43,8 @@ const Index = () => {
                             viewport={{ once: true }}
                             className="text-xs"
                         >
-                            Hecho con &lt;3 por el equipo de docu.ai. Utilizamos inteligencia artificial para ayudarte a
-                            generar documentos con mayor rapidez y eficiencia. ¡Gracias por elegirnos!
+                            Made with &lt;3 by the docu.ai team. We use artificial intelligence to help you generate
+                            documents faster and more efficiently - thanks for choosing us!
                         </motion.p>
                     </div>
                 </div>

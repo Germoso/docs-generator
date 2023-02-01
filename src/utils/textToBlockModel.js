@@ -23,7 +23,9 @@ const extractModelsFromText = async (textToConvert) => {
         const array = []
         for (let i = 0; i < node.childNodes.length; i++) {
             const text = extractTextFromHTML(node.childNodes[i], tagsToExtract)
-            array.push(text)
+            if (text) {
+                array.push(text)
+            }
         }
         return array
     }
@@ -62,6 +64,7 @@ const extractModelsFromText = async (textToConvert) => {
         {
             type: "paragraph",
             tag: "P",
+            level: 1,
         },
     ]
 

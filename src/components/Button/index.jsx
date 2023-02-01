@@ -16,7 +16,7 @@ const Button = ({ type = "primary", className, children, onClick = () => {} }) =
             return (
                 <button
                     onClick={onClick}
-                    className={`bg-white gap-2 -2 px-4 py-2 rounded-md hover:bg-black hover:text-white transition-colors ${className}`}
+                    className={` gap-2 -2 px-4 py-2 rounded-md hover:bg-black hover:text-white transition-colors bg-white ${className}`}
                 >
                     {children}
                 </button>

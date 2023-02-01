@@ -97,7 +97,7 @@ export default function Home() {
                                 </div>
                                 <span className="text-sm text-terciary-blue underline|">Edit the document bellow</span>
                                 <article className="bg-white w-full px-4 py-4 rounded-md  border-black border-solid border-2 shadow-xl">
-                                    <Editor data={text} />
+                                    <Editor mode={"preview"} data={text} />
                                 </article>
                             </div>
                         )}

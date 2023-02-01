@@ -1,11 +1,16 @@
 import React from "react"
 import Navbar from "../Navbar"
+import Footer from "../Footer"
 
-const Layout = ({ user }) => {
+const Layout = ({ user, children }) => {
     return (
-        <>
-            <Navbar user={user} />
-        </>
+        <div className="min-h-screen flex flex-col justify-between gap-8">
+            <div>
+                <Navbar user={user} />
+                {children}
+            </div>
+            <Footer />
+        </div>
     )
 }
 

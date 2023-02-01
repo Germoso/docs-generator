@@ -72,8 +72,13 @@ export const debit = async (id, tokens = 0) => {
     }
 }
 
-export const addDocument = async ({ id, prompt, details, type, total_tokens }) => {
+export const addDocument = async ({ id, prompt, details, type, total_tokens, content }) => {
+    console.log(id)
     console.log(prompt)
+    console.log(details)
+    console.log(type)
+    console.log(total_tokens)
+    console.log(content)
     try {
         await updateDoc(doc(db, "users", id), {
             documents: arrayUnion({
@@ -82,6 +87,9 @@ export const addDocument = async ({ id, prompt, details, type, total_tokens }) =
                 type,
                 usage: {
                     total_tokens,
+                },
+                content: {
+                    blocks: content,
                 },
             }),
         })
@@ -98,5 +106,30 @@ export const getDocuments = async ({ id }) => {
         return docSnap.data().documents
     } catch (error) {
         return error
+    }
+}
+
+export const getDocument = async ({ id, index }) => {
+    console.log(id)
+    try {
+        const docRef = doc(db, "users", id)
+        const docSnap = await getDoc(docRef)
+        return docSnap.data().documents[index]
+    } catch (error) {
+        return error
+    }
+}
+
+export const updateDocumentBlocks = async ({ id, documents }) => {
+    try {
+        await updateDoc(
+            doc(db, "users", id),
+            {
+                documents,
+            },
+            { merge: true }
+        )
+    } catch (error) {
+        console.log(error)
     }
 }

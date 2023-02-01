@@ -7,6 +7,8 @@ import TemplatesCard from "@/components/TemplateCard"
 import ProjectCard from "@/components/ProjectCard"
 import useUserAuth from "@/hooks/useUserAuth"
 import { getDocuments, userExist } from "@/firebase/db"
+import Footer from "../../components/Footer"
+import Layout from "@/components/Layout"
 
 const Index = () => {
     const [documents, setDocuments] = useState([])
@@ -35,9 +37,14 @@ const Index = () => {
         }
     }, [user])
 
+    useEffect(() => {
+        console.log(documents)
+
+        return () => {}
+    }, [documents])
+
     return (
-        <>
-            <Navbar user={user} />
+        <Layout user={user}>
             <div className="px-4 flex flex-col gap-2">
                 <div className="mt-8">
                     <h2 className="uppercase font-extrabold text-xl border-2 border-solid border-black inline-block border-l-0 border-r-0 border-t-0">
@@ -58,21 +65,24 @@ const Index = () => {
                     <h2 className="uppercase font-extrabold text-xl border-2 border-solid border-black inline-block border-l-0 border-r-0 border-t-0">
                         Documents
                     </h2>
-                    <div className="flex flex-col mt-2 gap-2">
-                        {documents.map((document) => {
+                    <div className="flex flex-col mt-2 gap-2 max-h-[50vh] overflow-y-auto">
+                        {documents.map((document, index) => {
                             return (
                                 <ProjectCard
                                     title={document.prompt}
                                     details={document.details}
                                     type={document.type}
                                     key={document.content}
+                                    content={document.content}
+                                    index={index}
+                                    documents={documents}
                                 />
                             )
                         })}
                     </div>
                 </div>
             </div>
-        </>
+        </Layout>
     )
 }
 

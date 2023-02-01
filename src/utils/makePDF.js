@@ -59,12 +59,7 @@ const makePDF = (blocks) => {
             pageMargins: [75, 75, 75, 75],
         }
     }
-    console.log(blocks)
-
     const docDefinition = createBlockDefinition(blocks)
-
-    console.log(docDefinition)
-
     pdfMake.createPdf(docDefinition).open()
 }
 
