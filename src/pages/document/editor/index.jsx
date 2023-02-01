@@ -21,7 +21,7 @@ const Editor = ({ index }) => {
     }, [user])
 
     return (
-        <Layout>
+        <Layout user={user}>
             <div className="px-4 mt-4">
                 <TextEditor data={data} index={index} user={user} mode="edit" />
             </div>
