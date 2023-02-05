@@ -21,7 +21,7 @@ const Index = () => {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="container mx-auto px-6 text-paragraph text-sm py-4 flex flex-col gap-2"
+            className="container mx-auto px-2 text-paragraph text-sm py-4 flex flex-col gap-2"
         >
             <section className="flex flex-col justify-start ">
                 <div className="flex flex-col gap-1 overflow-hidden">

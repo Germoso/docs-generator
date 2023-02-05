@@ -65,7 +65,7 @@ const Index = () => {
                     <h2 className="uppercase font-extrabold text-xl border-2 border-solid border-black inline-block border-l-0 border-r-0 border-t-0">
                         Documents
                     </h2>
-                    <div className="flex flex-col mt-2 gap-2 max-h-[50vh] overflow-y-auto">
+                    <div className="flex flex-col mt-2 gap-2 max-h-[70vh] overflow-y-auto">
                         {documents.map((document, index) => {
                             return (
                                 <ProjectCard

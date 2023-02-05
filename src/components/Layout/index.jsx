@@ -7,7 +7,7 @@ const Layout = ({ user, children }) => {
         <div className="min-h-screen flex flex-col justify-between gap-8">
             <div>
                 <Navbar user={user} />
-                {children}
+                <div className="px-4">{children}</div>
             </div>
             <Footer />
         </div>

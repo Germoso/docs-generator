@@ -11,7 +11,7 @@ const Index = ({ user }) => {
             <div className="flex justify-end p-2 border-b-2 border-solid border-t-0 border-l-0 border-r-0 border-black">
                 <div className="flex items-center gap-2 justify-between w-full">
                     <div>
-                        <span className=" font-semibold text-2xl px-2 py-2">docs.ai</span>
+                        <span className="select-none font-semibold text-2xl px-2 py-2">docs.ai</span>
                     </div>
                     <div className="flex justify-center items-center gap-2">
                         <div className="flex h-full items-center rounded-md text-sm font-semibold">
