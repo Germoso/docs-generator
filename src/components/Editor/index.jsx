@@ -35,7 +35,6 @@ var loadingMessages = [
 const Editor = ({ data, user, index, mode, createDoc }) => {
     const [editorContent, setEditorContent] = useState()
     const editorRef = useRef(null)
-    const [blocks, setBlocks] = useState()
 
     const initEditor = () => {
         editorRef.current = new EditorJS({
@@ -56,6 +55,12 @@ const Editor = ({ data, user, index, mode, createDoc }) => {
                         })
                         break
                     case "edit":
+                        editorRef.current.render({
+                            blocks: data,
+                        })
+                        break
+
+                    case "preview":
                         editorRef.current.render({
                             blocks: data,
                         })

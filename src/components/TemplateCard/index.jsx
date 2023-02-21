@@ -13,7 +13,7 @@ const TemplatesCard = ({ title, icon, text, generate }) => {
                     },
                 })
             }}
-            className="shadow-lg flex justify-center flex-col items-start border-black border-solid border border-opacity-90 rounded-md py-4 px-8 gap-2"
+            className="select-none hover:cursor-pointer shadow-lg flex justify-center flex-col items-start border-black border-solid border border-opacity-90 rounded-md py-4 px-8 gap-2"
         >
             {icon}
             <div className="flex flex-col gap-1">

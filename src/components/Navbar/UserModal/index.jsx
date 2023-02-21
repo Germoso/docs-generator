@@ -16,7 +16,7 @@ const UserModal = ({ displayName }) => {
             transition={{ ease: "easeInOut", duration: 0.1 }}
             className="bg-white border-2 border-solid border-black w-fit h-fit absolute right-2 top-16  rounded-md z-[999]"
         >
-            <div className="border border-black border-solid border-r-0 border-l-0 border-t-0 px-2 py-1 pr-24">
+            <div className="border border-black border-solid border-r-0 border-l-0 border-t-0 px-2 py-1 pr-36">
                 <span className="font-bold">{displayName}</span>
             </div>
             <div className="py-2 flex flex-col gap-2">

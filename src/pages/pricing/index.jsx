@@ -4,7 +4,7 @@ import React from "react"
 import { BsWallet2 } from "react-icons/bs"
 import { BiTime, BiLock } from "react-icons/bi"
 import TypedEffect from "@/components/TypedEffect"
-import TopBar from "@/components/TopBar"
+import Layout from "@/components/Layout"
 import Footer from "../../components/Footer"
 import { useRouter } from "next/router"
 
@@ -13,8 +13,7 @@ import { useRouter } from "next/router"
 const Pricing = () => {
     const router = useRouter()
     return (
-        <>
-            <TopBar />
+        <Layout>
             <div className="px-4">
                 <section className="h-screen flex flex-col justify-center items-center gap-6">
                     <article>
@@ -99,10 +98,9 @@ const Pricing = () => {
                             </span>
                         </div>
                     </section>
-                    <Footer />
                 </div>
             </div>
-        </>
+        </Layout>
     )
 }
 

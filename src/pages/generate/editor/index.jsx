@@ -10,7 +10,6 @@ import {
 } from "@/utils/TypeOfDocuments/essay"
 import Layout from "@/components/Layout"
 import generateData from "@/utils/generateData"
-import { text } from "../../../utils/text"
 import { addDocument, debit } from "@/firebase/db"
 
 export default function Editor({ prompt, details = "", type }) {
@@ -18,12 +17,6 @@ export default function Editor({ prompt, details = "", type }) {
     const [data, setData] = useState()
     const [tokens, setTokens] = useState(0)
     let rowData = ""
-
-    // useEffect(() => {
-    //     if (data) {
-    //         addDocument({ id: user.uid, prompt, details, type, total_tokens: tokens, content: {} })
-    //     }
-    // }, [data])
 
     useEffect(() => {
         const id = user.uid
@@ -72,19 +65,20 @@ export default function Editor({ prompt, details = "", type }) {
 
     return (
         <>
-            <Layout user={user} />
-            <div className="px-4 mt-4">
-                <TextEditor
-                    data={prompt ? data : text}
-                    user={user}
-                    generateSave
-                    createDoc={(content) => {
-                        console.log(content)
-                        addDocument({ id: user.uid, prompt, details, type, total_tokens: tokens, content })
-                    }}
-                    mode="generate"
-                />
-            </div>
+            <Layout user={user}>
+                <div className="px-4 mt-4">
+                    <TextEditor
+                        data={data}
+                        user={user}
+                        generateSave
+                        createDoc={(content) => {
+                            console.log(content)
+                            addDocument({ id: user.uid, prompt, details, type, total_tokens: tokens, content })
+                        }}
+                        mode="generate"
+                    />
+                </div>
+            </Layout>
         </>
     )
 }

@@ -73,12 +73,6 @@ export const debit = async (id, tokens = 0) => {
 }
 
 export const addDocument = async ({ id, prompt, details, type, total_tokens, content }) => {
-    console.log(id)
-    console.log(prompt)
-    console.log(details)
-    console.log(type)
-    console.log(total_tokens)
-    console.log(content)
     try {
         await updateDoc(doc(db, "users", id), {
             documents: arrayUnion({
@@ -99,7 +93,6 @@ export const addDocument = async ({ id, prompt, details, type, total_tokens, con
 }
 
 export const getDocuments = async ({ id }) => {
-    console.log(id)
     try {
         const docRef = doc(db, "users", id)
         const docSnap = await getDoc(docRef)
@@ -110,7 +103,6 @@ export const getDocuments = async ({ id }) => {
 }
 
 export const getDocument = async ({ id, index }) => {
-    console.log(id)
     try {
         const docRef = doc(db, "users", id)
         const docSnap = await getDoc(docRef)
@@ -133,3 +125,8 @@ export const updateDocumentBlocks = async ({ id, documents }) => {
         console.log(error)
     }
 }
+
+// updateDoc(doc(db, "users"), {
+//     nombre: "JDFKJAK",
+//     edad: 19,
+// }).then(() => {})

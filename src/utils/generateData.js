@@ -11,7 +11,7 @@ const generateData = async (prompt, max_tokens) => {
             model: "text-davinci-003",
             prompt: prompt,
             temperature: 1,
-            max_tokens: max_tokens || 3500,
+            max_tokens: max_tokens || 1000,
             top_p: 1,
             frequency_penalty: 0,
             presence_penalty: 0,

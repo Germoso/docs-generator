@@ -12,15 +12,15 @@ const Billing = () => {
             <div className="flex flex-col gap-2">
                 <section className="mt-4">
                     <h1 className="uppercase font-extrabold text-">Billing</h1>
-                    <p>
+                    <p className="mt-2">
                         Here you can manage your <span className="font-bold">"Letter Pieces"</span> balances, our
                         in-application currency that allows you to generate documents automatically with the help of
                         artificial intelligence, making sure you always have access to all the application's functions.
                     </p>
                 </section>
-                <div>
-                    <h2 className="mt-4">Manage Your Document Generation Costs</h2>
-                    <section className="mt-2 flex flex-col gap-2">
+                <div className="mt-10">
+                    <h2>Manage Your Document Generation Costs</h2>
+                    <section className="mt-4 flex flex-col gap-2">
                         <BillingCards
                             title={"Letter Pieces"}
                             description={"Get balance in your account"}

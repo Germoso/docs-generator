@@ -1,37 +1,61 @@
 import Image from "next/image"
-import React, { useEffect, useState } from "react"
-import coin from "public/coin.png"
+import React, { useState } from "react"
 import UserModal from "./UserModal"
 import { AnimatePresence } from "framer-motion"
+import Button from "../Button"
+import { useRouter } from "next/router"
 
-const Index = ({ user }) => {
+const Index = ({ user, isOpen, setOpen }) => {
     const [isUserModalOpen, setIsUserModalOpen] = useState(false)
+
+    const router = useRouter()
+
     return (
-        <div className="sticky left-0 top-0 w-full bg-white z-[999] ">
-            <div className="flex justify-end p-2 border-b-2 border-solid border-t-0 border-l-0 border-r-0 border-black">
-                <div className="flex items-center gap-2 justify-between w-full">
-                    <div>
-                        <span className="select-none font-semibold text-2xl px-2 py-2">docs.ai</span>
-                    </div>
-                    <div className="flex justify-center items-center gap-2">
-                        <div className="flex h-full items-center rounded-md text-sm font-semibold">
-                            <div className="flex gap-1 items-center">
+        <div className="sticky left-0 top-0 w-full z-50 bg-white">
+            <div className="flex justify-end py-2 pr-2">
+                <div className="relative flex items-end gap-2 justify-end w-full">
+                    {user ? (
+                        <div className="flex justify-center items-center gap-2">
+                            <div className="flex gap-1 items-center text-xs font-semibold">
                                 <span className="">Letter pieces:</span>
                                 <span className="font-semibold">{user.tokens}</span>
                             </div>
+                            <button
+                                onClick={() => {
+                                    setIsUserModalOpen(!isUserModalOpen)
+                                }}
+                                className="w-8 h-8 rounded-full overflow-clip relative"
+                            >
+                                {user.photoURL && (
+                                    <Image
+                                        src={user.photoURL}
+                                        alt="profile-pic"
+                                        className="hover:cursor-pointer w-full"
+                                        fill
+                                    />
+                                )}
+                            </button>
                         </div>
-                        <button
-                            onClick={() => {
-                                setIsUserModalOpen(!isUserModalOpen)
-                            }}
-                            className="w-10 h-10 rounded-full overflow-clip relative"
+                    ) : (
+                        <Button
+                            type="tertiary"
+                            className={"hover:underline text-base"}
+                            onClick={() => router.push("/auth/signin")}
                         >
-                            {user.photoURL && <Image src={user.photoURL} alt="profile-pic" className="w-full" fill />}
-                        </button>
-                    </div>
+                            Sign In
+                        </Button>
+                    )}
                 </div>
             </div>
-            <AnimatePresence>{isUserModalOpen && <UserModal displayName={user.displayName} />}</AnimatePresence>
+            <div
+                className="relative z-50
+            "
+            >
+                <AnimatePresence>
+                    {isUserModalOpen && <UserModal displayName={user.displayName} />}
+                    {/* {isOpen && <Panel />} */}
+                </AnimatePresence>
+            </div>
         </div>
     )
 }

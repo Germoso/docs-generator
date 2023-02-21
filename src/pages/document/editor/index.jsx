@@ -20,6 +20,10 @@ const Editor = ({ index }) => {
         }
     }, [user])
 
+    useEffect(() => {
+        console.log(data)
+    }, [data])
+
     return (
         <Layout user={user}>
             <div className="px-4 mt-4">

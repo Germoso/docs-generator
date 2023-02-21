@@ -1,18 +1,14 @@
-import React, { useEffect, useState } from "react"
+import React, { Suspense, useEffect, useState } from "react"
 import { useRouter } from "next/router"
-import { logOut } from "@/firebase/auth"
-import { useAuth } from "@/hooks/useAuth"
-import Navbar from "../../components/Navbar/index"
 import TemplatesCard from "@/components/TemplateCard"
 import ProjectCard from "@/components/ProjectCard"
 import useUserAuth from "@/hooks/useUserAuth"
-import { getDocuments, userExist } from "@/firebase/db"
-import Footer from "../../components/Footer"
+import { getDocuments } from "@/firebase/db"
 import Layout from "@/components/Layout"
 
 const Index = () => {
     const [documents, setDocuments] = useState([])
-    const { userAuthData, user, status } = useUserAuth()
+    const { user, status } = useUserAuth()
     const router = useRouter()
 
     useEffect(() => {
@@ -65,24 +61,33 @@ const Index = () => {
                     <h2 className="uppercase font-extrabold text-xl border-2 border-solid border-black inline-block border-l-0 border-r-0 border-t-0">
                         Documents
                     </h2>
-                    <div className="flex flex-col mt-2 gap-2 max-h-[70vh] overflow-y-auto">
-                        {documents.map((document, index) => {
-                            return (
-                                <ProjectCard
-                                    title={document.prompt}
-                                    details={document.details}
-                                    type={document.type}
-                                    key={document.content}
-                                    content={document.content}
-                                    index={index}
-                                    documents={documents}
-                                />
-                            )
-                        })}
+
+                    <div className="flex flex-col mt-2 gap-2 sm:flex-row sm:flex-wrap">
+                        <ProjectComponents documents={documents} />
                     </div>
                 </div>
             </div>
         </Layout>
+    )
+}
+
+const ProjectComponents = ({ documents }) => {
+    return (
+        <>
+            {documents.map((document, index) => {
+                return (
+                    <ProjectCard
+                        title={document.prompt}
+                        details={document.details}
+                        type={document.type}
+                        key={document.content}
+                        content={document.content}
+                        index={index}
+                        documents={documents}
+                    />
+                )
+            })}
+        </>
     )
 }
 
