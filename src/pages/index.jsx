@@ -49,7 +49,7 @@ export default function Home() {
                 </Button>
             </header>
 
-            <main className="w-full flex flex-col gap-20 bg-white">
+            <main className="w-full flex flex-col gap-20 bg-white container mx-auto">
                 <motion.section
                     onViewportEnter={() => {
                         setIsEditorOnView(true)
@@ -71,7 +71,9 @@ export default function Home() {
                                     ]}
                                 />
                             </div>
-                            <span className="text-sm text-terciary-blue underline|">Edit the document bellow</span>
+                            <span className="text-sm text-terciary-blue underline|">
+                                Edit and export the document bellow
+                            </span>
                             <article className="bg-white w-full px-4 py-4 rounded-md  border-black border-solid border-2 shadow-xl md:max-w-3xl">
                                 <Editor mode={"preview"} data={data} />
                             </article>

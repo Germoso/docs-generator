@@ -20,7 +20,14 @@ const UserModal = ({ displayName }) => {
                 <span className="font-bold">{displayName}</span>
             </div>
             <div className="py-2 flex flex-col gap-2">
-                <Button text={"Settings"} icon={<FiSettings />} />
+                <Button
+                    text={"Billing"}
+                    icon={<FiSettings />}
+                    onClick={() => {
+                        console.log("Billing")
+                        router.push("/account/billing")
+                    }}
+                />
                 <Button
                     text={"Log out"}
                     icon={<BiLogOut />}

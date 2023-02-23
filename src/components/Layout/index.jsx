@@ -4,10 +4,14 @@ import Footer from "../Footer"
 import { motion, useAnimationControls } from "framer-motion"
 import { Sling as Hamburger } from "hamburger-react"
 import Link from "next/link"
+import { logOut } from "@/firebase/auth"
+import { useRouter } from "next/router"
 
 const Layout = ({ user, children }) => {
     const controls = useAnimationControls()
     const [isOpen, setOpen] = useState(false)
+
+    const router = useRouter()
 
     useEffect(() => {
         if (!isOpen) {
@@ -29,12 +33,33 @@ const Layout = ({ user, children }) => {
                 </span>
             </div>
 
-            <ul className=" bg-black fixed top-0 left-0 w-full h-screen flex flex-col justify-center list-none text-white text-2xl uppercase gap-8 pl-10">
-                <Li href={"/"}>Home</Li>
-                <Li href="/pricing">Pricing</Li>
-                <Li href="auth/signin">Login</Li>
-                <Li href="auth/signup">Get Started</Li>
-            </ul>
+            <div className="bg-black fixed top-0 left-0 w-full h-screen flex flex-col justify-center pl-8 gap-4">
+                <ul className="w-full   flex flex-col justify-center list-none text-white text-2xl uppercase gap-8 ">
+                    <Li href={"/"}>Home</Li>
+                    <Li href="/pricing">Pricing</Li>
+                    <Li href="auth/signin">Login</Li>
+                    <Li href="auth/signup">Get Started</Li>
+                </ul>
+                {user && (
+                    <>
+                        <hr className="w-2/3" />
+                        <div className="pl-4">
+                            <ul className="mt-2 flex flex-col gap-1">
+                                <UserLi href="/home">App</UserLi>
+                                <UserLi href="/account/billing">Billing</UserLi>
+                                <UserLi
+                                    onClick={(e) => {
+                                        e.preventDefault()
+                                        logOut().then(() => router.push("/"))
+                                    }}
+                                >
+                                    Log out
+                                </UserLi>
+                            </ul>
+                        </div>
+                    </>
+                )}
+            </div>
 
             <motion.div
                 className="z-50 h-screen bg-white flex flex-col "
@@ -56,6 +81,17 @@ const Li = ({ children, href = "" }) => {
     return (
         <li className="hover:cursor-pointer">
             <a className="text-white no-underline hover:underline" href={href}>
+                {" "}
+                {children}{" "}
+            </a>
+        </li>
+    )
+}
+
+const UserLi = ({ children, href = "", onClick = () => {} }) => {
+    return (
+        <li className="hover:cursor-pointer">
+            <a className="text-white no-underline hover:underline" href={href} onClick={(e) => onClick(e)}>
                 {" "}
                 {children}{" "}
             </a>

@@ -10,23 +10,24 @@ const makePDF = (blocks) => {
                 level: undefined,
                 fontSize: undefined,
                 margin: -2,
-
                 lineHeight: 1.5,
+                bold: false,
+                lineHeight: 1.3,
             }
             switch (block.type) {
                 case "header":
                     blockModel.text = `${block.data.text} \n`
-
+                    blockModel.bold = true
                     switch (block.data.level) {
                         case 1:
-                            blockModel.fontSize = 32
-
+                            blockModel.fontSize = 20
+                            blockModel.text = `${block.data.text} \n\n`
                             break
                         case 2:
-                            blockModel.fontSize = 24
+                            blockModel.fontSize = 16
                             break
                         case 3:
-                            blockModel.fontSize = 18.72
+                            blockModel.fontSize = 14.72
                             break
                         case 4:
                             blockModel.fontSize = 16

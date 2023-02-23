@@ -21,9 +21,9 @@ const Index = () => {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="bg-white px-2 sm:px-0   text-paragraph text-sm py-4 flex flex-col gap-2"
+            className="bg-white sm:px-0  w-full text-paragraph text-sm py-4 flex flex-col gap-2"
         >
-            <div className="container w-screen mx-auto">
+            <div className="container w-screen mx-auto pl-2 pr-6 sm:px-0">
                 <section className="flex flex-col justify-start w-full ">
                     <div className="flex flex-col gap-1 overflow-hidden w-full">
                         <motion.div

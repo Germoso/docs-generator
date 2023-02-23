@@ -41,7 +41,7 @@ const Index = () => {
 
     return (
         <Layout user={user}>
-            <div className="px-4 flex flex-col gap-2">
+            <div className="px-4 flex flex-col gap-2 container mx-auto">
                 <div className="mt-8">
                     <h2 className="uppercase font-extrabold text-xl border-2 border-solid border-black inline-block border-l-0 border-r-0 border-t-0">
                         Get started

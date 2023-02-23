@@ -13,7 +13,7 @@ const Login = () => {
     const router = useRouter()
 
     useEffect(() => {
-        if (status === 1) {
+        if (status === 1 && user) {
             userExist(user.uid)
                 .then((exist) => {
                     console.log(exist)
@@ -26,7 +26,7 @@ const Login = () => {
                 })
                 .catch((error) => console.log(error))
         }
-    }, [status])
+    }, [status, user])
 
     return (
         <div className="h-screen flex flex-col justify-center items-center gap-6">

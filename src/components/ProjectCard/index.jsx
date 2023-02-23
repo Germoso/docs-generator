@@ -16,7 +16,7 @@ const ProjectCard = ({ details, title, type, content, index, documents }) => {
                     },
                 })
             }}
-            className="hover:cursor-pointer relative flex justify-center flex-col items-start border-black border-solid border rounded-sm gap-2 shadow-md hover:shadow-2xl"
+            className="hover:cursor-pointer relative flex justify-center flex-col items-start border-black border-solid border rounded-sm gap-2 shadow-md hover:shadow-2xl sm:w-96"
         >
             <div className="flex flex-col w-full  min-h-[160px]">
                 <div className="px-2 border-black border-solid border w-full  border-l-0 border-r-0 border-t-0 py-2 flex justify-between items-center h-fit">

@@ -41,7 +41,7 @@ const Generate = ({ type }) => {
                             pathname: "generate/editor",
                             query: {
                                 prompt: prompt,
-                                tokens: tokensAmount,
+                                maxTokens: tokensAmount,
                                 details,
                                 type,
                             },
@@ -87,7 +87,7 @@ const Generate = ({ type }) => {
                                 setTokensAmount(e.target.value)
                             }}
                             value={tokensAmount}
-                            min={2000}
+                            min={500}
                             max={3500}
                         />
                     </div>

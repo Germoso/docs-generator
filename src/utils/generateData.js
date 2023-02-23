@@ -5,13 +5,21 @@ const configuration = new Configuration({
 })
 const openai = new OpenAIApi(configuration)
 
-const generateData = async (prompt, max_tokens) => {
+/**
+ * Generate the data
+ * @param {String} prompt Prompt to generate
+ * @param {Number} maxTokens Amount of Tokens
+ * @returns
+ */
+const generateData = async (prompt, maxTokens) => {
+    console.log("TOKENS AMOUNT")
+    console.log(maxTokens)
     try {
         const completion = await openai.createCompletion({
             model: "text-davinci-003",
             prompt: prompt,
             temperature: 1,
-            max_tokens: max_tokens || 1000,
+            max_tokens: maxTokens || 2500,
             top_p: 1,
             frequency_penalty: 0,
             presence_penalty: 0,

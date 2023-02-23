@@ -14,7 +14,7 @@ const Pricing = () => {
     const router = useRouter()
     return (
         <Layout>
-            <div className="px-4">
+            <div className="px-4 container mx-auto">
                 <section className="h-screen flex flex-col justify-center items-center gap-6">
                     <article>
                         <h1 className="text-4xl text-center uppercase font-extrabold">Pricing</h1>

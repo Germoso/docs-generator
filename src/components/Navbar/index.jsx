@@ -11,7 +11,7 @@ const Index = ({ user, isOpen, setOpen }) => {
     const router = useRouter()
 
     return (
-        <div className="sticky left-0 top-0 w-full z-50 bg-white">
+        <div className="sticky left-0 top-0 w-full z-50 ">
             <div className="flex justify-end py-2 pr-2">
                 <div className="relative flex items-end gap-2 justify-end w-full">
                     {user ? (
@@ -51,10 +51,12 @@ const Index = ({ user, isOpen, setOpen }) => {
                 className="relative z-50
             "
             >
-                <AnimatePresence>
+                {/*
+                     ACTIVA EL MODAL DEL USUARIO EN EL NAVBAR
+                      <AnimatePresence>
                     {isUserModalOpen && <UserModal displayName={user.displayName} />}
-                    {/* {isOpen && <Panel />} */}
-                </AnimatePresence>
+                
+                </AnimatePresence> */}
             </div>
         </div>
     )
