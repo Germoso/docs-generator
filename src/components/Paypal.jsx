@@ -59,7 +59,7 @@ const ButtonWrapper = ({ currency, showSpinner, amount, disabled }) => {
 
 export default function Paypal({ amount, disabled }) {
     return (
-        <div style={{ maxWidth: "750px", minHeight: "200px" }}>
+        <div style={{ maxWidth: "750px", minHeight: "200px" }} className="flex justify-center items-center">
             <PayPalScriptProvider
                 options={{
                     "client-id": "test",

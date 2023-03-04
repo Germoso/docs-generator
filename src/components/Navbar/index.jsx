@@ -16,7 +16,7 @@ const Index = ({ user, isOpen, setOpen }) => {
                 <div className="relative flex items-end gap-2 justify-end w-full">
                     {user ? (
                         <div className="flex justify-center items-center gap-2">
-                            <div className="flex gap-1 items-center text-xs font-semibold">
+                            <div className="flex gap-1 items-center text-xs font-semibold select-none">
                                 <span className="">Letter pieces:</span>
                                 <span className="font-semibold">{user.tokens}</span>
                             </div>
@@ -27,12 +27,7 @@ const Index = ({ user, isOpen, setOpen }) => {
                                 className="w-8 h-8 rounded-full overflow-clip relative"
                             >
                                 {user.photoURL && (
-                                    <Image
-                                        src={user.photoURL}
-                                        alt="profile-pic"
-                                        className="hover:cursor-pointer w-full"
-                                        fill
-                                    />
+                                    <Image src={user.photoURL} alt="profile-pic" className=" w-full" fill />
                                 )}
                             </button>
                         </div>

@@ -15,9 +15,9 @@ const Layout = ({ user, children }) => {
 
     useEffect(() => {
         if (!isOpen) {
-            controls.start({ x: 0, y: 0 })
-            console.log(isOpen)
-            document.body.style.overflowY = "auto"
+            controls.start({ x: 0, y: 0 }).then(() => {
+                document.body.style.overflowY = "auto"
+            })
         } else {
             document.body.style.overflowY = "hidden"
             controls.start({ x: 300, y: 300 })
@@ -28,7 +28,12 @@ const Layout = ({ user, children }) => {
         <div className="relative min-h-screen flex flex-col justify-between gap-8 bg-black ">
             <div className="fixed top-0 left-0 z-[999] flex items-center">
                 <Hamburger toggled={isOpen} toggle={setOpen} size={20} color={isOpen ? "#FFF" : "#000"} />
-                <span className={`select-none font-semibold text-xl ${isOpen ? "text-white" : "text-black"}`}>
+                <span
+                    className={`select-none font-semibold text-xl hover:cursor-pointer ${
+                        isOpen ? "text-white" : "text-black"
+                    }`}
+                    onClick={() => window.location.replace("/")}
+                >
                     docs.ai
                 </span>
             </div>
@@ -42,7 +47,7 @@ const Layout = ({ user, children }) => {
                 </ul>
                 {user && (
                     <>
-                        <hr className="w-2/3" />
+                        <hr className="w-40" />
                         <div className="pl-4">
                             <ul className="mt-2 flex flex-col gap-1">
                                 <UserLi href="/home">App</UserLi>

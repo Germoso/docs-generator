@@ -6,6 +6,7 @@ import H1 from "@/components/H1"
 import dolarToToken from "@/utils/dolarToToken"
 
 import Paypal from "@/components/Paypal"
+import H2 from "@/components/H2"
 
 const Tokens = () => {
     const { user, status, setUser } = useUserAuth()
@@ -32,39 +33,42 @@ const Tokens = () => {
 
     return (
         <Layout user={user}>
-            <H1 className={"mt-6"}>Payment</H1>
-            <span className="text-sm inline-block">Add letter pieces to your account</span>
+            <div className="container mx-auto">
+                <H1 className={"mt-6"}>Payment</H1>
+                <span className="text-sm inline-block">Add letter pieces to your account</span>
 
-            <section className="mt-4 w-full flex-col gap-2 flex bg-gray-100 py-8 px-4">
-                <div className="flex  text-3xl">
-                    <span className="opacity-70">$</span>
-                    <input
-                        type="text"
-                        value={amount}
-                        onChange={(e) => handleInputChange(e.target.value)}
-                        placeholder="2"
-                        className={`bg-transparent border-none focus:outline-none text-3xl appearance-none m-0`}
-                        style={{ width: `${String(amount).length || 1}ch` }}
-                    />
-                    <span className="opacity-70">USD</span>
-                </div>
-                <hr />
-                <>
-                    {!error.isError ? (
-                        <div className="text-base italic ">
-                            <span className="opacity-70">Letter Pieces:</span>
-                            <span className=""> {letterPieces}</span>
-                        </div>
-                    ) : (
-                        <div className="italic text-sm text-red-700">
-                            <span>{error.message}</span>
-                        </div>
-                    )}
-                </>
-            </section>
-            <section className="mt-10 ">
-                <Paypal amount={amount} disabled={error.isError} />
-            </section>
+                <section className="mt-4 w-full flex-col gap-2 flex bg-gray-100 py-8 px-4">
+                    <div className="flex  text-3xl">
+                        <span className="opacity-70">$</span>
+                        <input
+                            type="text"
+                            value={amount}
+                            onChange={(e) => handleInputChange(e.target.value)}
+                            placeholder="2"
+                            className={`bg-transparent border-none focus:outline-none text-3xl appearance-none m-0`}
+                            style={{ width: `${String(amount).length || 1}ch` }}
+                        />
+                        <span className="opacity-70">USD</span>
+                    </div>
+                    <hr />
+                    <>
+                        {!error.isError ? (
+                            <div className="text-base italic ">
+                                <span className="opacity-70">Letter Pieces:</span>
+                                <span className=""> {letterPieces}</span>
+                            </div>
+                        ) : (
+                            <div className="italic text-sm text-red-700">
+                                <span>{error.message}</span>
+                            </div>
+                        )}
+                    </>
+                </section>
+                <H2 className={"mt-8"}>Checkout</H2>
+                <section className="bg-gray-100 flex justify-center items-center ">
+                    <Paypal amount={amount} disabled={error.isError} />
+                </section>
+            </div>
         </Layout>
     )
 }

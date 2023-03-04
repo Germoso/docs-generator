@@ -10,6 +10,7 @@ import TypedEffect from "../TypedEffect"
 import { getDocuments, updateDocumentBlocks } from "@/firebase/db"
 
 const EDITOR_HOLDER_ID = "editor"
+
 var loadingMessages = [
     "Loading, please stand by...",
     "Preparing information...",
@@ -94,31 +95,9 @@ const Editor = ({ data, user, index, mode, createDoc }) => {
     const [isOpen, setIsOpen] = useState(false)
     return (
         <>
-            <div id={EDITOR_HOLDER_ID}></div>
+            {mode !== "preview" && <hr className="mb-4" />}
             {data ? (
-                <div
-                    className={
-                        mode === "preview" ? "flex w-full justify-end" : "fixed right-2 bottom-2 z-[999] flex gap-2"
-                    }
-                >
-                    <Button onClick={() => setIsOpen(true)} type="secondary">
-                        Export
-                    </Button>
-
-                    {mode === "edit" && (
-                        <Button
-                            onClick={async () => {
-                                const blocks = await editorRef.current.save()
-                                const documents = await getDocuments({ id: user.uid })
-                                documents[index].content = blocks
-                                updateDocumentBlocks({ id: user.uid, documents })
-                            }}
-                            type="secondary"
-                        >
-                            save
-                        </Button>
-                    )}
-                </div>
+                <ExportButton mode={mode} getDocuments={getDocuments} user={user} setIsOpen={setIsOpen} />
             ) : (
                 <div className="">
                     <span className="uppercase font-extrabold">
@@ -136,8 +115,35 @@ const Editor = ({ data, user, index, mode, createDoc }) => {
                     </div>
                 </div>
             )}
+
+            <div id={EDITOR_HOLDER_ID}></div>
+
             {isOpen && <Modal isOpen={isOpen} setIsOpen={setIsOpen} blocks={editorContent} getData={getData} />}
         </>
+    )
+}
+
+const ExportButton = ({ mode, setIsOpen, user, getDocuments }) => {
+    return (
+        <div className={"flex w-full justify-end gap-2"}>
+            <Button onClick={() => setIsOpen(true)} type="secondary">
+                Export
+            </Button>
+
+            {mode === "edit" && (
+                <Button
+                    onClick={async () => {
+                        const blocks = await editorRef.current.save()
+                        const documents = await getDocuments({ id: user.uid })
+                        documents[index].content = blocks
+                        updateDocumentBlocks({ id: user.uid, documents })
+                    }}
+                    type="secondary"
+                >
+                    save
+                </Button>
+            )}
+        </div>
     )
 }
 
